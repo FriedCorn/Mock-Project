@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // http.csrf().disable();
+        http.csrf().disable();
 
         // Non-login required
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Login Form.
-        http.authorizeRequests().and().formLogin()//
+        http.authorizeRequests().and().formLogin()
                 // Login summit url.
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")

@@ -18,7 +18,7 @@ public class LoginController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = {"/"})
+    @GetMapping(value = {"/", "/login"})
     public String login(Model model, String error) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
