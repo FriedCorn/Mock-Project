@@ -19,6 +19,11 @@ public class ListRoleServiceImpl implements ListRoleService {
     }
 
     @Override
+    public void save(ListRole listRole) {
+        listRoleRepository.save(listRole);
+    }
+
+    @Override
     public List<ListRole> findListRolesByAccount_Username(String username) {
         return listRoleRepository.findListRolesByAccount_Username(username);
     }

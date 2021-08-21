@@ -41,10 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // ROLE_USER or ROLE_ADMIN required.
         // If not, redirect to /login.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/userInfo", "/account/{accountId}").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         // ROLE_ADMIN
-        http.authorizeRequests().antMatchers("/account").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/account", "/account/list").access("hasRole('ROLE_ADMIN')");
 
         // AccessDeniedException
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
