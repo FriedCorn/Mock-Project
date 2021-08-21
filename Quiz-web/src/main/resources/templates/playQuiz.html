@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Question</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css/}"
+	type="text/css" />
+<link rel="stylesheet"
+	th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}"
+	type="text/css" />
+<link rel="stylesheet" th:href="@{/css/playQuiz.css}" type="text/css">
+</head>
+  <body>
+    <div class="container-fluid">
+      <div class="top">
+        <i class="fas fa-times"></i>
+        <div class="top__count">1/15</div>
+      </div>
+      <div class="qa">
+        <div class="question">What is your name ?</div>
+        <div class="answer">
+          <div class="row">
+            <div class="col col-sm-5 answer__a"></div>
+            <div class="col col-sm-5 answer__b"></div>
+          </div>
+          <div class="row">
+            <div class="col col-sm-5 answer__c"></div>
+            <div class="col col-sm-5 answer__d"></div>
+          </div>
+        </div>
+      </div>
+      <div class="btn__control">
+        <i class="fas fa-caret-square-left"></i>
+        <i class="fas fa-caret-square-right"></i>
+      </div>
+    </div>
+  </body>
+</html>
