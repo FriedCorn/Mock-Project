@@ -1,6 +1,7 @@
 package com.mockproject.quizweb.service.impl;
 
 import com.mockproject.quizweb.domain.Account;
+import com.mockproject.quizweb.repository.AccountRepository;
 import com.mockproject.quizweb.service.AccountService;
 import com.mockproject.quizweb.service.ListRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,18 @@ import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final AccountService accountService;
+    private final AccountRepository accountRepository;
     private final ListRoleService listRoleService;
 
     @Autowired
-    public UserDetailsServiceImpl(AccountService accountService, ListRoleService listRoleService) {
-        this.accountService = accountService;
+    public UserDetailsServiceImpl(AccountRepository accountRepository, ListRoleService listRoleService) {
+        this.accountRepository = accountRepository;
         this.listRoleService = listRoleService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account userAccount = accountService.findAccountByUsername(username);
+        Account userAccount = accountRepository.findAccountByUsername(username);
 
         if (userAccount == null) {
             System.out.println("User not found! " + username);

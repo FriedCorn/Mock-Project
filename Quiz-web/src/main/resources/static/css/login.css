@@ -1,0 +1,77 @@
+.container-blue {
+    background-color: #D3ECEB;
+    margin: 5%;
+    padding: 5% 50px;
+    border-radius: 10px;
+}
+
+.h1-login {
+    color: #1B4D89;
+    text-align: center;
+    font-weight: bold;
+}
+
+.p-error {
+    color: darkred;
+    text-align: center;
+    font-weight: bold;
+}
+
+p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.p-login-question {
+    color: #1B4D89;
+}
+
+.p-login-with {
+    color: #1B4D89;
+    font-size: larger;
+    font-weight: normal;
+    text-align: center;
+    margin: 0;
+}
+
+.form-input {
+    background: transparent;
+    border: 0 solid;
+    display: block;
+    width: 100%;
+    padding: .5rem;
+    transition: 250ms background ease-in;
+}
+
+.row-input {
+    border-bottom: 2px solid rgba(0,0,0,0.12);
+}
+
+.form-input:focus {
+    background: white;
+    color: black;
+    transition: 250ms background ease-in;
+    outline: none;
+}
+
+.gradient-button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: uppercase;
+    background-size: 200% auto;
+    background-image: linear-gradient(to right, #2A62A6 0%, #6DB784 25%, #48E1DD 50%, #6DB784 75%, #2A62A6 100%);
+    color: #FFF;
+    width: 100%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 25px;
+    border-style: hidden;
+}
+.gradient-button:hover{
+    background-position: right center;
+}

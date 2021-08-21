@@ -24,7 +24,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "username", length = 40)
+    @Column(name = "username", length = 40, unique = true)
     @NotNull
     @NotEmpty
     private String username;
@@ -33,6 +33,11 @@ public class Account {
     @NotNull
     @NotEmpty
     private String password;
+
+    @Column(name = "email", length = 80, unique = true)
+    @NotNull
+    @NotEmpty
+    private String email;
 
     @Column(name = "first_name", length = 30)
     @NotNull
