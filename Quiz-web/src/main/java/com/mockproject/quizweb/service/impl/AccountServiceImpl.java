@@ -38,11 +38,34 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getById(long id) {
-        return accountRepository.getById(id);
+        return accountRepository.findById(id).orElse(null);
     }
 
     @Override
     public Account findAccountByUsername(String username) {
         return accountRepository.findAccountByUsername(username);
+    }
+
+    @Override
+    public void delete(Account deleteAccount) {
+        Account foundAccount = accountRepository.findAccountByUsername(deleteAccount.getUsername());
+
+        if (foundAccount != null)
+            accountRepository.deleteById(foundAccount.getId());
+    }
+
+    @Override
+    public void update(Account updateAccount) {
+        Account foundAccount = accountRepository.findAccountByUsername(updateAccount.getUsername());
+        updateAccount.setId(foundAccount.getId());
+
+        if (updateAccount.getPassword().equals("")) {
+            updateAccount.setPassword(foundAccount.getPassword());
+
+            accountRepository.save(updateAccount);
+        } else {
+            updateAccount.setPassword(bCryptPasswordEncoder.encode(updateAccount.getPassword()));
+            accountRepository.save(updateAccount);
+        }
     }
 }

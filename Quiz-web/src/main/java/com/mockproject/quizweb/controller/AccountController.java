@@ -2,12 +2,7 @@ package com.mockproject.quizweb.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.mockproject.quizweb.domain.Account;
-import com.mockproject.quizweb.domain.Role;
-
 import com.mockproject.quizweb.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -28,73 +24,38 @@ public class AccountController {
 
     // For Admin feature
     @GetMapping("/account/list")
-    public ModelAndView accountList(ModelAndView mv, HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Object accountRoleObject = session.getAttribute("accountRole");
-        if (accountRoleObject == null || ((Role) accountRoleObject).getName().equals("user")) {
-            return new ModelAndView("error/account/accessPermissionDenied");
-        }
+    @ResponseBody
+    public List<Account> accountList(ModelAndView mv) {
 
         List<Account> accountList = accountService.findAll();
 
-        mv.setViewName("account/accountList");
-        mv.addObject("accountList", accountList);
-
-        return mv;
+        return accountList;
     }
 
     @GetMapping("/account/{accountId}")
-    public ModelAndView accountDetail(ModelAndView mv, @PathVariable("accountId") long accountId,
-            HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Object accountIdObject = session.getAttribute("accountId");
-        if (accountIdObject == null || (int) accountIdObject != accountId) {
-            return new ModelAndView("error/account/accessPermissionDenied");
-        }
+    @ResponseBody
+    public Account accountDetail(ModelAndView mv, @PathVariable("accountId") long accountId) {
 
         Account account = accountService.getById(accountId);
-        if (account == null) {
-            return new ModelAndView("error/account/accountNotFound");
-        }
 
-        mv.setViewName("account/accountDetail");
-        mv.addObject("account", account);
-
-        return mv;
+        return account;
     }
 
     @PostMapping("/account/update")
-    public ModelAndView accountUpdate(ModelAndView mv, @ModelAttribute("account") Account account,
-            HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Object accountIdObject = session.getAttribute("accountId");
-        if (accountIdObject == null) {
-            return new ModelAndView("error/account/accessPermissionDenied");
-        }
+    @ResponseBody
+    public Account accountUpdate(ModelAndView mv, @ModelAttribute("account") Account updateAccount) {
+        accountService.update(updateAccount);
 
-        accountService.save(account);
-
-        return new ModelAndView("redirect:/account/" + account.getId());
+        return updateAccount;
     }
 
     // For Admin feature
-    @PostMapping("/account/delete/{accountId}")
-    public ModelAndView accountDelete(ModelAndView mv, @PathVariable("accountId") long accountId,
-            HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        Object accountIdObject = session.getAttribute("accountId");
-        if (accountIdObject == null) {
-            return new ModelAndView("error/account/accessPermissionDenied");
-        }
+    @PostMapping("/account/delete")
+    @ResponseBody
+    public String accountDelete(ModelAndView mv, @ModelAttribute("account") Account deleteAccount) {
 
-        Object accountRoleObject = session.getAttribute("accountRole");
-        Role accountRole = (Role) accountRoleObject;
-        if (!accountRole.getName().equals("admin")) {
-            return new ModelAndView("error/account/accessPermissionDenied");
-        }
+        accountService.delete(deleteAccount);
 
-        accountService.deleteById(accountId);
-
-        return new ModelAndView("redirect:/account/list");
+        return "OK";
     }
 }

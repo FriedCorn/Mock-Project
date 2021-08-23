@@ -2,7 +2,6 @@ package com.mockproject.quizweb.service.impl;
 
 import com.mockproject.quizweb.domain.Account;
 import com.mockproject.quizweb.repository.AccountRepository;
-import com.mockproject.quizweb.service.AccountService;
 import com.mockproject.quizweb.service.ListRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
