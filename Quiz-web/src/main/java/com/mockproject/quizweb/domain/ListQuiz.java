@@ -24,7 +24,11 @@ public class ListQuiz {
 
     @Basic
     @Column(name = "numb_quiz")
-    private String numberOfQuiz;
+    private int numberOfQuiz;
+
+    @Basic
+    @Column(name = "time_limit")
+    private String timeLimit;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
