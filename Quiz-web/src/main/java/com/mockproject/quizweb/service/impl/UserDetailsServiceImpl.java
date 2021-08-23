@@ -1,8 +1,8 @@
 package com.mockproject.quizweb.service.impl;
 
 import com.mockproject.quizweb.domain.Account;
+import com.mockproject.quizweb.domain.Role;
 import com.mockproject.quizweb.repository.AccountRepository;
-import com.mockproject.quizweb.service.ListRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,12 +18,10 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final AccountRepository accountRepository;
-    private final ListRoleService listRoleService;
 
     @Autowired
-    public UserDetailsServiceImpl(AccountRepository accountRepository, ListRoleService listRoleService) {
+    public UserDetailsServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.listRoleService = listRoleService;
     }
 
     @Override
@@ -38,16 +36,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         System.out.println("Found User: " + userAccount.getUsername());
 
         // [ROLE_USER, ROLE_ADMIN,..]
-        List<String> roleNames = this.listRoleService.getRolesName(userAccount.getUsername());
+        List<Role> roles = userAccount.getRoles();
 
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        if (roleNames != null) {
-            for (String role : roleNames) {
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
+        List<GrantedAuthority> grantList = new ArrayList<>();
+        if (roles != null) {
+            for (Role role : roles) {
+                GrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
                 grantList.add(authority);
             }
         }
 
-        return (UserDetails) new User(userAccount.getUsername(), userAccount.getPassword(), grantList);
+        return new User(userAccount.getUsername(), userAccount.getPassword(), grantList);
     }
 }

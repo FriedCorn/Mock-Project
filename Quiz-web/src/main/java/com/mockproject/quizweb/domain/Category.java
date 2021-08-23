@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -11,33 +12,32 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "list_role")
-public class ListRole {
+@Table(name = "category")
+public class Category {
 
-    @Column(name = "id")
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Basic
+    @Column(name = "name")
+    private String name;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @OneToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @ToString.Exclude
+    private List<ListQuiz> listQuizzes;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ListRole listRole = (ListRole) o;
+        Category category = (Category) o;
 
-        return Objects.equals(id, listRole.id);
+        return Objects.equals(id, category.id);
     }
 
     @Override
     public int hashCode() {
-        return 2094383663;
+        return 1596826009;
     }
 }
