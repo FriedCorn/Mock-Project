@@ -22,6 +22,10 @@ public class ListQuiz {
     @Column(name = "name")
     private String name;
 
+    @Basic
+    @Column(name = "numb_quiz")
+    private String numberOfQuiz;
+
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
