@@ -1,12 +1,10 @@
 package com.mockproject.quizweb.controller;
 
 import com.mockproject.quizweb.domain.Account;
-import com.mockproject.quizweb.domain.ListRole;
 import com.mockproject.quizweb.domain.Role;
 import com.mockproject.quizweb.service.AccountService;
-import com.mockproject.quizweb.service.ListRoleService;
-import com.mockproject.quizweb.service.RoleService;
 
+import com.mockproject.quizweb.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +13,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class LoginController {
     private final AccountService accountService;
-    private final ListRoleService listRoleService;
     private final RoleService roleService;
 
     @Autowired
-    public LoginController(AccountService accountService, ListRoleService listRoleRepository, RoleService roleRepository) {
+    public LoginController(AccountService accountService, RoleService roleService) {
         this.accountService = accountService;
-        this.listRoleService = listRoleRepository;
-        this.roleService = roleRepository;
+        this.roleService = roleService;
     }
 
     @GetMapping(value = {"/", "/login"})
@@ -50,15 +49,11 @@ public class LoginController {
             return mv;
         }
 
-        
-        accountService.save(account);
-
         Role role = roleService.findByName("ROLE_USER");
-        
-        ListRole listRole = new ListRole();
-        listRole.setAccount(accountService.findAccountByUsername(account.getUsername()));
-        listRole.setRole(role);
-        listRoleService.save(listRole);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        account.setRoles(roles);
+        accountService.save(account);
 
         mv.setViewName("signup");
         mv.addObject("success", "Signup successfully !");
