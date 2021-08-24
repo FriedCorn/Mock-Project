@@ -27,12 +27,11 @@ public class ListQuizController {
 
     @GetMapping(value = { "/createListQuiz" })
     public ModelAndView getCreateTest(ModelAndView mv, String error) {
-        mv.setViewName("createTest");
+        mv.setViewName("createListQuiz");
         mv.addObject("test", new ListQuiz());
         return mv;
     }
 
-    // ListQuizDTO để mang object của giao diện về convert qua object trong DB
     @PostMapping(value = { "/createListQuiz" })
     public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("quizForm") ListQuizForm listQuizForm) {
         ListQuiz listQuiz = new ListQuiz();
