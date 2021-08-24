@@ -7,6 +7,6 @@ import java.util.List;
 public interface QuizHistoryService {
     QuizHistory getQuizHistoryByAccount_Id(int id);
     List<QuizHistory> getQuizHistoriesByListQuiz_IdAndAccount_Username(int list_id, String username);
-    void save(QuizHistory account);
-    void update(QuizHistory account);
+    void save(QuizHistory quizHistory);
+    void update(QuizHistory quizHistory);
 }

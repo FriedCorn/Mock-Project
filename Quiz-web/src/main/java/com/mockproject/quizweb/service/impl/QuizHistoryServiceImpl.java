@@ -29,13 +29,13 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public void save(QuizHistory account) {
-
+    public void save(QuizHistory quizHistory) {
+        quizHistoryRepository.save(quizHistory);
     }
 
     @Override
-    public void update(QuizHistory account) {
-
+    public void update(QuizHistory quizHistory) {
+        quizHistoryRepository.save(quizHistory);
     }
 
 }
