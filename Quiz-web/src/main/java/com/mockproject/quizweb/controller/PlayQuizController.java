@@ -1,8 +1,6 @@
 package com.mockproject.quizweb.controller;
 
-import com.mockproject.quizweb.domain.ListQuiz;
-import com.mockproject.quizweb.domain.Quiz;
-import com.mockproject.quizweb.domain.QuizHistory;
+import com.mockproject.quizweb.domain.*;
 import com.mockproject.quizweb.service.AccountService;
 import com.mockproject.quizweb.service.ListQuizService;
 import com.mockproject.quizweb.service.QuizHistoryService;
@@ -15,6 +13,7 @@ import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -47,10 +46,49 @@ public class PlayQuizController {
         return "playQuiz";
     }
 
-    @GetMapping(value = {"/{list_quiz_id}"})
+    @GetMapping(value = {"/{list_quiz_id}/quiz"}, produces = "application/json")
     public @ResponseBody Quiz getQuiz(@PathVariable Integer list_quiz_id,
                                       @RequestParam Integer quiz_number) {
         return listQuizService.getListQuizById(list_quiz_id).getQuizzes().get(quiz_number);
+    }
+
+    @PostMapping(value = "/{list_quiz_id}", produces = "application/json")
+    public @ResponseBody String updateAnswer(@PathVariable Integer list_quiz_id,
+                                             @RequestParam Integer quiz_number,
+                                             @RequestParam String answer_string,
+                                             Principal principal) {
+        ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
+        QuizHistory quizHistory = getDoingQuiz(listQuiz, principal.getName());
+        Quiz quiz = listQuiz.getQuizzes().get(quiz_number);
+        List<AnswerHistory> answerHistories = new ArrayList<>();
+        if (answer_string.contains("A")) {
+            AnswerHistory answerHistory = new AnswerHistory();
+            answerHistory.setAnswer(quiz.getAnswers().get(0));
+            answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
+            answerHistories.add(answerHistory);
+        }
+        if (answer_string.contains("B")) {
+            AnswerHistory answerHistory = new AnswerHistory();
+            answerHistory.setAnswer(quiz.getAnswers().get(1));
+            answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
+            answerHistories.add(answerHistory);
+        }
+        if (answer_string.contains("C")) {
+            AnswerHistory answerHistory = new AnswerHistory();
+            answerHistory.setAnswer(quiz.getAnswers().get(2));
+            answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
+            answerHistories.add(answerHistory);
+        }
+        if (answer_string.contains("D")) {
+            AnswerHistory answerHistory = new AnswerHistory();
+            answerHistory.setAnswer(quiz.getAnswers().get(3));
+            answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
+            answerHistories.add(answerHistory);
+        }
+        assert quizHistory != null;
+        quizHistory.setAnswerHistories(answerHistories);
+        quizHistoryService.save(quizHistory);
+        return "success";
     }
 
     private String getRemainTime(ListQuiz listQuiz, String username) {
@@ -85,5 +123,16 @@ public class PlayQuizController {
             ret = listQuiz.getTimeLimit();
         }
         return ret;
+    }
+
+    private QuizHistory getDoingQuiz(ListQuiz listQuiz, String username) {
+        List<QuizHistory> listQuizHistory =
+                quizHistoryService.getQuizHistoriesByListQuiz_IdAndAccount_Username(listQuiz.getId(), username);
+        for (QuizHistory quizHistory: listQuizHistory) {
+            if (quizHistory.getTimeAnswered() == null) {
+                return quizHistory;
+            }
+        }
+        return null;
     }
 }
