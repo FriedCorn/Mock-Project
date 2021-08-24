@@ -19,4 +19,9 @@ public class ListQuizServiceImpl implements ListQuizService {
     public ListQuiz getListQuizById(int id) {
         return listQuizRepository.getListQuizById(id);
     }
+
+    @Override
+    public void create(ListQuiz listQuiz) {
+        listQuizRepository.save(listQuiz);
+    }
 }
