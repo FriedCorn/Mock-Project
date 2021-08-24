@@ -2,7 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #111;
+    background-color: #663399;
+}
+
+button {
+    border: none;
 }
 
 .top {
@@ -16,10 +20,10 @@
     color: #fff;
 }
 
-.top__count {
-    width: 5rem;
-    height: 4rem;
+.top__count,
+#top__time {
     font-size: 2rem;
+    padding: 0.5rem;
     background-color: #545454;
     color: #fff;
     display: flex;
@@ -57,45 +61,46 @@
     height: 15rem;
     border-radius: 0.625rem;
     margin: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.24);
 }
 
 .answer__a {
-    border: 1 solid #2f6dae;
+    border: 1px solid #2f6dae;
     background-color: #2f6dae;
 }
 
 .answer__b {
-    border: 1 solid #4d9da6;
+    border: 1px solid #4d9da6;
     background-color: #4d9da6;
 }
 
 .answer__c {
-    border: 1 solid #eca82c;
+    border: 1px solid #eca82c;
     background-color: #eca82c;
 }
 
 .answer__d {
-    border: 1 solid #a93e3e;
+    border: 1px solid #a93e3e;
     background-color: #a93e3e;
 }
 
 .answer__a:hover {
-    border: 1 solid #19497c;
+    border: 1px solid #19497c;
     background-color: #19497c;
 }
 
 .answer__b:hover {
-    border: 1 solid #32686e;
+    border: 1px solid #32686e;
     background-color: #32686e;
 }
 
 .answer__c:hover {
-    border: 1 solid #af7c1d;
+    border: 1px solid #af7c1d;
     background-color: #af7c1d;
 }
 
 .answer__d:hover {
-    border: 1 solid #812020;
+    border: 1px solid #812020;
     background-color: #812020;
 }
 
