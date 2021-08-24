@@ -42,6 +42,7 @@ public class PlayQuizController {
             model.addAttribute("error", remainTime);
         }
         model.addAttribute("time", remainTime);
+        model.addAttribute("list_quiz_id", list_quiz_id);
         model.addAttribute("current", 1);
         model.addAttribute("total", listQuiz.getNumberOfQuiz());
         model.addAttribute("quiz", listQuiz.getQuizzes().get(0));
@@ -57,31 +58,34 @@ public class PlayQuizController {
     @PostMapping(value = "/{list_quiz_id}", produces = "application/json")
     public @ResponseBody String updateAnswer(@PathVariable Integer list_quiz_id,
                                              @RequestParam Integer quiz_number,
-                                             @RequestParam String answer_string,
+                                             @RequestParam Boolean answer_A,
+                                             @RequestParam Boolean answer_B,
+                                             @RequestParam Boolean answer_C,
+                                             @RequestParam Boolean answer_D,
                                              Principal principal) {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         QuizHistory quizHistory = getDoingQuiz(listQuiz, principal.getName());
         Quiz quiz = listQuiz.getQuizzes().get(quiz_number);
         List<AnswerHistory> answerHistories = new ArrayList<>();
-        if (answer_string.contains("A")) {
+        if (answer_A) {
             AnswerHistory answerHistory = new AnswerHistory();
             answerHistory.setAnswer(quiz.getAnswers().get(0));
             answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
             answerHistories.add(answerHistory);
         }
-        if (answer_string.contains("B")) {
+        if (answer_B) {
             AnswerHistory answerHistory = new AnswerHistory();
             answerHistory.setAnswer(quiz.getAnswers().get(1));
             answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
             answerHistories.add(answerHistory);
         }
-        if (answer_string.contains("C")) {
+        if (answer_C) {
             AnswerHistory answerHistory = new AnswerHistory();
             answerHistory.setAnswer(quiz.getAnswers().get(2));
             answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
             answerHistories.add(answerHistory);
         }
-        if (answer_string.contains("D")) {
+        if (answer_D) {
             AnswerHistory answerHistory = new AnswerHistory();
             answerHistory.setAnswer(quiz.getAnswers().get(3));
             answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);

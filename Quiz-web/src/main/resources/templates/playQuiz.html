@@ -10,8 +10,13 @@
 <link rel="stylesheet"
 	th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}"
 	type="text/css" />
-<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/css/playQuiz.css}" type="text/css">
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
+<script th:inline="javascript">
+  var current = /*[[${current}]]*/ 1;
+  var total = /*[[${total}]]*/ 15;
+  var list_quiz_id = /*[[${list_quiz_id}]]*/ 1;
+</script>
 </head>
   <body>
     <div class="container-fluid">
@@ -21,15 +26,27 @@
         <div class="top__count" th:text="|${current}/${total}|"></div>
       </div>
       <div class="qa">
-        <div class="question" th:text="${quiz.getContent()}">/div>
+        <div class="question" th:text="${quiz.getContent()}"></div>
         <div class="answer">
           <div class="row">
-            <div class="col col-sm-5 answer__a" th:text="${quiz.getAnswers().get(0).getContent()}"></div>
-            <div class="col col-sm-5 answer__b" th:text="${quiz.getAnswers().get(1).getContent()}"></div>
+            <label class="col col-sm-5 check_container">
+              <input type="checkbox" id="ans__a">
+              <div class="answer__a checkmark" th:text="${quiz.getAnswers().get(0).getContent()}"></div>
+            </label>
+            <label class="col col-sm-5 check_container">
+              <input type="checkbox" id="ans__b">
+              <div class="answer__b checkmark" th:text="${quiz.getAnswers().get(1).getContent()}"></div>
+            </label>
           </div>
           <div class="row">
-            <div class="col col-sm-5 answer__c" th:text="${quiz.getAnswers().get(2).getContent()}"></div>
-            <div class="col col-sm-5 answer__d" th:text="${quiz.getAnswers().get(3).getContent()}"></div>
+            <label class="col col-sm-5 check_container">
+              <input type="checkbox" id="ans__c">
+              <div class="answer__c checkmark" th:text="${quiz.getAnswers().get(2).getContent()}"></div>
+            </label>
+            <label class="col col-sm-5 check_container">
+              <input type="checkbox" id="ans__d">
+              <div class="answer__d checkmark" th:text="${quiz.getAnswers().get(3).getContent()}"></div>
+            </label>
           </div>
         </div>
       </div>
@@ -38,7 +55,6 @@
         <button id="next_btn"><i class="fas fa-caret-square-right"></i></button>
       </div>
     </div>
-  </div>
     <script type="text/javascript" th:src="@{/js/playQuiz.js}"></script>
   </body>
 </html>

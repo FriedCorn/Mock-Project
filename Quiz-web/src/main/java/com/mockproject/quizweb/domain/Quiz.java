@@ -1,5 +1,6 @@
 package com.mockproject.quizweb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -18,19 +19,23 @@ public class Quiz {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "content")
     private String content;
+
     @Basic
     @Column(name = "is_multiple_choice")
     private boolean correctedAnswer;
     @Basic
     @Column(name = "img_src")
     private String imgSrc;
+
     @OneToMany(mappedBy = "quizByQuizId", orphanRemoval = true)
     @ToString.Exclude
     private List<Answer> answers;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "list_quiz_id")
     private ListQuiz listQuiz;
