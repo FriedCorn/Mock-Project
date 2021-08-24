@@ -12,12 +12,17 @@ public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
 
     @Autowired
-    QuizServiceImpl(QuizRepository quizRepository) {
+    public QuizServiceImpl(QuizRepository quizRepository) {
         this.quizRepository = quizRepository;
     }
 
     @Override
     public void delete(Quiz quiz) {
         quizRepository.delete(quiz);
+    }
+
+    @Override
+    public void update(Quiz quiz) {
+        quizRepository.save(quiz);
     }
 }
