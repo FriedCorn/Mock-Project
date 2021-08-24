@@ -1,12 +1,16 @@
 package com.mockproject.quizweb.controller;
 
+import com.mockproject.quizweb.domain.Account;
 import com.mockproject.quizweb.domain.Category;
 import com.mockproject.quizweb.domain.ListQuiz;
 import com.mockproject.quizweb.domain.Quiz;
 import com.mockproject.quizweb.domain.form.ListQuizForm;
+import com.mockproject.quizweb.service.AccountService;
 import com.mockproject.quizweb.service.CategoryService;
 import com.mockproject.quizweb.service.ListQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,11 +22,14 @@ import java.util.List;
 public class ListQuizController {
     private final ListQuizService listQuizService;
     private final CategoryService categoryService;
+    private final AccountService accountService;
 
     @Autowired
-    public ListQuizController(ListQuizService listQuizService, CategoryService categoryService) {
+    public ListQuizController(ListQuizService listQuizService, CategoryService categoryService,
+            AccountService accountService) {
         this.listQuizService = listQuizService;
         this.categoryService = categoryService;
+        this.accountService = accountService;
     }
 
     @GetMapping(value = { "/createListQuiz" })
@@ -30,43 +37,44 @@ public class ListQuizController {
         mv.setViewName("createListQuiz");
         mv.addObject("listQuizForm", new ListQuizForm());
 
-        Category category;
-        List<Category> categoryList = new ArrayList<Category>();
-
-        category = new Category();
-        category.setName("Math");
-        categoryList.add(category);
-
-        category = new Category();
-        category.setName("English");
-        categoryList.add(category);
-
-        category = new Category();
-        category.setName("Physic");
-        categoryList.add(category);
+        List<Category> categoryList = categoryService.getAllCategory();
+        System.out.println(categoryList);
 
         mv.addObject("categoryList", categoryList);
-        
+
         return mv;
     }
 
     @PostMapping(value = { "/createListQuiz" })
     public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("listQuizForm") ListQuizForm listQuizForm) {
-        // ListQuiz listQuiz = new ListQuiz();
-        // Category category = categoryService.findByName(listQuizForm.getCategoryName()).orElse(null);
-        // List<Quiz> quizList = new ArrayList<>();
-        // listQuiz.setName(listQuizForm.getQuizName());
-        // listQuiz.setNumberOfQuiz(0);
-        // listQuiz.setTimeLimit(listQuizForm.getTimeLimit());
-        // listQuiz.setCategory(category);
-        // listQuiz.setQuizzes(quizList);
-        // listQuizService.create(listQuiz);
+        String timeLimit = listQuizForm.getTimeLimitHour() + ":" + listQuizForm.getTimeLimitMinute() + ":"
+                + listQuizForm.getTimeLimitSecond();
 
-        String timeLimit = listQuizForm.getTimeLimitHour() + ":" + listQuizForm.getTimeLimitMinute() + ":" + listQuizForm.getTimeLimitSecond();
+        ListQuiz listQuiz = new ListQuiz();
+        Category category = categoryService.findByName(listQuizForm.getCategoryName()).orElse(null);
+        List<Quiz> quizList = new ArrayList<>();
+        listQuiz.setName(listQuizForm.getQuizName());
+        listQuiz.setNumberOfQuiz(0);
+        listQuiz.setTimeLimit(timeLimit);
+        listQuiz.setCategory(category);
+        listQuiz.setQuizzes(quizList);
 
-        System.out.println(listQuizForm.getQuizName());
-        System.out.println(listQuizForm.getCategoryName());
-        System.out.println(timeLimit);
+        // Get account info
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        Account account = accountService.findAccountByUsername(username);
+
+        if (account != null) {
+            listQuiz.setAccount(account);
+            listQuizService.create(listQuiz);
+        }
+
         return mv;
     }
 }
