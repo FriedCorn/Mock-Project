@@ -28,21 +28,45 @@ public class ListQuizController {
     @GetMapping(value = { "/createListQuiz" })
     public ModelAndView getCreateTest(ModelAndView mv, String error) {
         mv.setViewName("createListQuiz");
-        mv.addObject("test", new ListQuiz());
+        mv.addObject("listQuizForm", new ListQuizForm());
+
+        Category category;
+        List<Category> categoryList = new ArrayList<Category>();
+
+        category = new Category();
+        category.setName("Math");
+        categoryList.add(category);
+
+        category = new Category();
+        category.setName("English");
+        categoryList.add(category);
+
+        category = new Category();
+        category.setName("Physic");
+        categoryList.add(category);
+
+        mv.addObject("categoryList", categoryList);
+        
         return mv;
     }
 
     @PostMapping(value = { "/createListQuiz" })
-    public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("quizForm") ListQuizForm listQuizForm) {
-        ListQuiz listQuiz = new ListQuiz();
-        Category category = categoryService.findByName(listQuizForm.getCategoryName()).orElse(null);
-        List<Quiz> quizList = new ArrayList<>();
-        listQuiz.setName(listQuizForm.getQuizName());
-        listQuiz.setNumberOfQuiz(0);
-        listQuiz.setTimeLimit(listQuizForm.getTimeLimit());
-        listQuiz.setCategory(category);
-        listQuiz.setQuizzes(quizList);
-        listQuizService.create(listQuiz);
+    public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("listQuizForm") ListQuizForm listQuizForm) {
+        // ListQuiz listQuiz = new ListQuiz();
+        // Category category = categoryService.findByName(listQuizForm.getCategoryName()).orElse(null);
+        // List<Quiz> quizList = new ArrayList<>();
+        // listQuiz.setName(listQuizForm.getQuizName());
+        // listQuiz.setNumberOfQuiz(0);
+        // listQuiz.setTimeLimit(listQuizForm.getTimeLimit());
+        // listQuiz.setCategory(category);
+        // listQuiz.setQuizzes(quizList);
+        // listQuizService.create(listQuiz);
+
+        String timeLimit = listQuizForm.getTimeLimitHour() + ":" + listQuizForm.getTimeLimitMinute() + ":" + listQuizForm.getTimeLimitSecond();
+
+        System.out.println(listQuizForm.getQuizName());
+        System.out.println(listQuizForm.getCategoryName());
+        System.out.println(timeLimit);
         return mv;
     }
 }

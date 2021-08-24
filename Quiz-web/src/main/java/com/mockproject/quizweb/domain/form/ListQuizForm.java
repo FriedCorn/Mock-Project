@@ -6,5 +6,7 @@ import lombok.Data;
 public class ListQuizForm {
     private String quizName;
     private String categoryName;
-    private String timeLimit;
+    private String timeLimitHour;
+    private String timeLimitMinute;
+    private String timeLimitSecond;
 }
