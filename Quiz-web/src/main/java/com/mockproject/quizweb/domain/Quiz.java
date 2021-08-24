@@ -17,7 +17,7 @@ public class Quiz {
 
     @Id
     @Column(name = "id")
-    private long id;
+    private int id;
     @Basic
     @Column(name = "content")
     private String content;
