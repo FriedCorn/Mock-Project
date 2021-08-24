@@ -27,6 +27,10 @@ public class ListQuiz {
     @Column(name = "numb_quiz")
     private int numberOfQuiz;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
+
     @Basic
     @Column(name = "time_limit")
     private String timeLimit;
