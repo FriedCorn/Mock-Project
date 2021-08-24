@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         accountRepository.deleteById(id);
     }
 
@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getById(long id) {
+    public Account getById(int id) {
         return accountRepository.findById(id).orElse(null);
     }
 

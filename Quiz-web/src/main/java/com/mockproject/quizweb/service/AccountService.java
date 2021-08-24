@@ -9,13 +9,13 @@ public interface AccountService {
 
     void update(Account account);
 
-    void deleteById(long id);
+    void deleteById(int id);
 
     void delete(Account account);
 
     List<Account> findAll();
 
-    Account getById(long id);
+    Account getById(int id);
 
     Account findAccountByUsername(String username);
 }

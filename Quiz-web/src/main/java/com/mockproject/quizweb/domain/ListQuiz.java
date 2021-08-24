@@ -16,7 +16,7 @@ import java.util.Objects;
 public class ListQuiz {
     @Id
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Basic
     @Column(name = "name")
