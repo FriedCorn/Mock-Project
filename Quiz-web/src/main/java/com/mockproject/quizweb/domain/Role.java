@@ -19,27 +19,27 @@ import java.util.Objects;
 @Table(name = "role")
 public class Role {
 
-    @Column(name = "id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+     @Column(name = "id")
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private long id;
 
-    @Column(name = "name")
-    @NotNull
-    @NotEmpty
-    private String name;
+     @Column(name = "name")
+     @NotNull
+     @NotEmpty
+     private String name;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
+     @Override
+     public boolean equals(Object o) {
+          if (this == o) return true;
+          if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+          Role role = (Role) o;
 
-        return Objects.equals(id, role.id);
-    }
+          return Objects.equals(id, role.id);
+     }
 
-    @Override
-    public int hashCode() {
-        return 1179619963;
-    }
+     @Override
+     public int hashCode() {
+          return 1179619963;
+     }
 }

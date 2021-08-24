@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Quiz {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @Basic
