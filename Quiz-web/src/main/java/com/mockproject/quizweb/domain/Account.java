@@ -25,35 +25,35 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username", length = 40, unique = true)
-    @NotNull
-    @NotEmpty
-    private String username;
+     @Column(name = "username", length = 40, unique = true)
+     @NotNull
+     @NotEmpty
+     private String username;
 
-    @Column(name = "password")
-    @NotNull
-    @NotEmpty
-    private String password;
+     @Column(name = "password")
+     @NotNull
+     @NotEmpty
+     private String password;
 
-    @Column(name = "email", length = 80, unique = true)
-    @NotNull
-    @NotEmpty
-    private String email;
+     @Column(name = "email", length = 80, unique = true)
+     @NotNull
+     @NotEmpty
+     private String email;
 
-    @Column(name = "first_name", length = 30)
-    @NotNull
-    @NotEmpty
-    private String firstName;
+     @Column(name = "first_name", length = 30)
+     @NotNull
+     @NotEmpty
+     private String firstName;
 
-    @Column(name = "last_name", length = 30)
-    @NotNull
-    @NotEmpty
-    private String lastName;
+     @Column(name = "last_name", length = 30)
+     @NotNull
+     @NotEmpty
+     private String lastName;
 
-    @Column(name = "dob", length = 30)
-    @NotNull
-    @NotEmpty
-    private String DoB;
+     @Column(name = "dob", length = 30)
+     @NotNull
+     @NotEmpty
+     private String DoB;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "list_role",
@@ -62,17 +62,17 @@ public class Account {
     @ToString.Exclude
     private List<Role> roles;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Account account = (Account) o;
+     @Override
+     public boolean equals(Object o) {
+          if (this == o) return true;
+          if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+          Account account = (Account) o;
 
-        return Objects.equals(id, account.id);
-    }
+          return Objects.equals(id, account.id);
+     }
 
-    @Override
-    public int hashCode() {
-        return 2083479647;
-    }
+     @Override
+     public int hashCode() {
+          return 2083479647;
+     }
 }
