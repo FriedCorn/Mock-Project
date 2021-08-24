@@ -27,18 +27,14 @@ public class AccountController {
     @ResponseBody
     public List<Account> accountList(ModelAndView mv) {
 
-        List<Account> accountList = accountService.findAll();
-
-        return accountList;
+        return accountService.findAll();
     }
 
     @GetMapping("/account/{accountId}")
     @ResponseBody
-    public Account accountDetail(ModelAndView mv, @PathVariable("accountId") long accountId) {
+    public Account accountDetail(ModelAndView mv, @PathVariable("accountId") int accountId) {
 
-        Account account = accountService.getById(accountId);
-
-        return account;
+        return accountService.getById(accountId);
     }
 
     @PostMapping("/account/update")
