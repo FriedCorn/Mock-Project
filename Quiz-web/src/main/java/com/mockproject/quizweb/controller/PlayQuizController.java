@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,26 +94,29 @@ public class PlayQuizController {
     }
 
     private String getRemainTime(ListQuiz listQuiz, String username) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm:ss");
         List<QuizHistory> listQuizHistory =
                 quizHistoryService.getQuizHistoriesByListQuiz_IdAndAccount_Username(listQuiz.getId(), username);
         String time = listQuiz.getTimeLimit();
+        Duration durTime = Duration.between(LocalTime.parse("00:00:00", dtf2), LocalTime.parse(time, dtf2));
+        long remTime = durTime.getSeconds();
         String ret = "This quiz has ended!";
-        if (listQuizHistory != null) {
+        if (listQuizHistory.size() != 0) {
             for (QuizHistory quizHistory: listQuizHistory) {
                 if (quizHistory.getTimeAnswered() != null) {
                     continue;
                 }
                 LocalDateTime now = LocalDateTime.now();
-                LocalDateTime start = (LocalDateTime) dtf.parse(quizHistory.getTimeStarted());
-                if (now.compareTo(start) > 0) {
+                LocalDateTime end = LocalDateTime.parse(quizHistory.getTimeStarted(), dtf).plusSeconds(remTime);
+                if (now.compareTo(end) >= 0) {
                     quizHistory.setTimeAnswered(dtf.format(now));
                     quizHistoryService.update(quizHistory);
                     continue;
                 }
-                Duration dur = Duration.between(start, now);
-                ret = dur.toSeconds() / 60 + ":" +
-                        dur.toSeconds() % 60;
+                Duration dur = Duration.between(now, end);
+                ret = dur.toHours() + ":" + dur.toMinutes() % 60
+                        + ":" + dur.toSeconds() % 60;
             }
         }
         else {

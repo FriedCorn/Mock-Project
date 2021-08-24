@@ -17,7 +17,7 @@
                 <div class="box">
                     <h1 class="h1-login">Login</h1>
                     <p class="p-error" th:if="${error}" th:text="${error}"></p>
-                    <form class="my-2" th:action="@{/j_spring_security_check}" method="POST">
+                    <form class="my-2" th:action="@{/login-process}" method="POST">
                         <div class="form-group">
                             <p>Username</p>
                             <div class="row row-input">

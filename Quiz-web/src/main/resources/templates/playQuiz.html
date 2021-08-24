@@ -10,31 +10,35 @@
 <link rel="stylesheet"
 	th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}"
 	type="text/css" />
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/css/playQuiz.css}" type="text/css">
 </head>
   <body>
     <div class="container-fluid">
       <div class="top">
         <i class="fas fa-times"></i>
-        <div class="top__count">1/15</div>
+        <span id="top__time" th:text="${time}"></span>
+        <div class="top__count" th:text="|${current}/${total}|"></div>
       </div>
       <div class="qa">
-        <div class="question">What is your name ?</div>
+        <div class="question" th:text="${quiz.getContent()}">/div>
         <div class="answer">
           <div class="row">
-            <button class="col col-sm-5 answer__a" onclick="addAnswer(this)"></button>
-            <button class="col col-sm-5 answer__b" onclick="addAnswer(this)"></button>
+            <div class="col col-sm-5 answer__a" th:text="${quiz.getAnswers().get(0).getContent()}"></div>
+            <div class="col col-sm-5 answer__b" th:text="${quiz.getAnswers().get(1).getContent()}"></div>
           </div>
           <div class="row">
-            <button class="col col-sm-5 answer__c" onclick="addAnswer(this)"></button>
-            <button class="col col-sm-5 answer__d" onclick="addAnswer(this)"></button>
+            <div class="col col-sm-5 answer__c" th:text="${quiz.getAnswers().get(2).getContent()}"></div>
+            <div class="col col-sm-5 answer__d" th:text="${quiz.getAnswers().get(3).getContent()}"></div>
           </div>
         </div>
       </div>
       <div class="btn__control">
-        <i class="fas fa-caret-square-left"></i>
-        <i class="fas fa-caret-square-right"></i>
+        <button id="back_btn"><i class="fas fa-caret-square-left"></i></button>
+        <button id="next_btn"><i class="fas fa-caret-square-right"></i></button>
       </div>
     </div>
+  </div>
+    <script type="text/javascript" th:src="@{/js/playQuiz.js}"></script>
   </body>
 </html>
