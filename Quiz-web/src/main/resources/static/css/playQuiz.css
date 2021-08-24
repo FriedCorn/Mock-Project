@@ -23,9 +23,9 @@ button {
 .top__count,
 #top__time {
     font-size: 2rem;
+    color: #fff;
     padding: 0.5rem;
     background-color: #545454;
-    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +41,7 @@ button {
 }
 
 .question {
-    font-size: 5rem;
+    font-size: 4rem;
     color: #fff;
 }
 
@@ -57,50 +57,46 @@ button {
 .answer__b,
 .answer__c,
 .answer__d {
-    width: 37.5rem;
-    height: 15rem;
+    font-size: 3rem;
+    color: #fff;
+    width: 32.5rem;
+    height: 10rem;
     border-radius: 0.625rem;
+    border: none;
     margin: 1rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.24);
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 8px 8px rgba(0,0,0,0.24);
 }
 
 .answer__a {
-    border: 1px solid #2f6dae;
     background-color: #2f6dae;
 }
 
 .answer__b {
-    border: 1px solid #4d9da6;
     background-color: #4d9da6;
 }
 
 .answer__c {
-    border: 1px solid #eca82c;
     background-color: #eca82c;
 }
 
 .answer__d {
-    border: 1px solid #a93e3e;
     background-color: #a93e3e;
 }
 
 .answer__a:hover {
-    border: 1px solid #19497c;
     background-color: #19497c;
 }
 
 .answer__b:hover {
-    border: 1px solid #32686e;
     background-color: #32686e;
 }
 
 .answer__c:hover {
-    border: 1px solid #af7c1d;
     background-color: #af7c1d;
 }
 
 .answer__d:hover {
-    border: 1px solid #812020;
     background-color: #812020;
 }
 
@@ -127,4 +123,46 @@ button {
     * {
         font-size: 10px;
     }
+}
+
+.check_container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    font-size: 3rem;
+    color: #fff;
+    border-radius: 0.625rem;
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 8px 8px rgba(0,0,0,0.24);
+}
+
+/* When the checkbox is checked, add a blue background */
+.check_container input:checked ~ .checkmark {
+    background-color: #00b359;
+}
+
+/* Show the checkmark when checked */
+.check_container input:checked ~ .checkmark:after {
+    display: block;
 }
