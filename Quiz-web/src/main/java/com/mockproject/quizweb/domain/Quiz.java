@@ -18,6 +18,7 @@ public class Quiz {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Basic
@@ -31,7 +32,7 @@ public class Quiz {
     @Column(name = "img_src")
     private String imgSrc;
 
-    @OneToMany(mappedBy = "quizByQuizId", orphanRemoval = true)
+    @OneToMany(mappedBy = "quizByQuizId")
     @ToString.Exclude
     private List<Answer> answers;
 

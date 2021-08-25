@@ -16,6 +16,7 @@ import java.util.Objects;
 public class ListQuiz {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Basic
@@ -34,7 +35,7 @@ public class ListQuiz {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @OneToMany(mappedBy = "listQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "listQuiz", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Quiz> quizzes;
 

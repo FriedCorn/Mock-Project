@@ -39,6 +39,16 @@ function updateQuiz(quiz) {
     $(".answer__c:first").text(quiz["answers"][2]["content"]);
     $(".answer__d:first").text(quiz["answers"][3]["content"]);
 }
+function updateAnswer(answer) {
+    $("#ans__a").prop('checked', answer[0]);
+    $("#ans__b").prop('checked', answer[1]);
+    $("#ans__c").prop('checked', answer[2]);
+    $("#ans__d").prop('checked', answer[3]);
+}
+function updatePage(res) {
+    updateQuiz(res["quiz"]);
+    updateAnswer(res["answer"]);
+}
 
 function summitAnswer() {
     $.ajax({
@@ -51,6 +61,7 @@ function summitAnswer() {
             answer_C: $("#ans__c").prop('checked'),
             answer_D: $("#ans__d").prop('checked')
         },
+        dataType: 'JSON',
         success: function() {
             console.log("Success");
         },
@@ -68,7 +79,7 @@ $("#next_btn").click(function() {
             success: function(data) {
                 summitAnswer();
                 current += 1;
-                updateQuiz(data);
+                updatePage(data);
             },
             error: function() {
                 console.log("Error occur when sending data");
@@ -85,7 +96,7 @@ $("#back_btn").click(function() {
             success: function(data) {
                 summitAnswer();
                 current -= 1;
-                updateQuiz(data);
+                updatePage(data);
             },
             error: function() {
                 console.log("Error occur when sending data");
