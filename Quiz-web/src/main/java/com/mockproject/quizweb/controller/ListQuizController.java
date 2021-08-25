@@ -9,8 +9,6 @@ import com.mockproject.quizweb.service.AccountService;
 import com.mockproject.quizweb.service.CategoryService;
 import com.mockproject.quizweb.service.ListQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,19 +30,6 @@ public class ListQuizController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = { "/createListQuiz" })
-    public ModelAndView getCreateTest(ModelAndView mv, String error) {
-        mv.setViewName("createListQuiz");
-        mv.addObject("listQuizForm", new ListQuizForm());
-
-        List<Category> categoryList = categoryService.getAllCategory();
-        System.out.println(categoryList);
-
-        mv.addObject("categoryList", categoryList);
-
-        return mv;
-    }
-
     @PostMapping(value = { "/createListQuiz" })
     public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("listQuizForm") ListQuizForm listQuizForm) {
         String timeLimit = listQuizForm.getTimeLimitHour() + ":" + listQuizForm.getTimeLimitMinute() + ":"
@@ -60,21 +45,13 @@ public class ListQuizController {
         listQuiz.setQuizzes(quizList);
 
         // Get account info
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        Account account = accountService.findAccountByUsername(username);
+        Account account = accountService.getCurrentAccount();
 
         if (account != null) {
             listQuiz.setAccount(account);
             listQuizService.create(listQuiz);
         }
 
-        return mv;
+        return new ModelAndView("redirect:/quiz");
     }
 }

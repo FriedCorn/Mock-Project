@@ -4,6 +4,8 @@ import com.mockproject.quizweb.domain.Account;
 import com.mockproject.quizweb.repository.AccountRepository;
 import com.mockproject.quizweb.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -72,5 +74,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findAccountByEmail(String email) {
         return accountRepository.findAccountByEmail(email);
+    }
+
+    @Override
+    public Account getCurrentAccount() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        
+        return accountRepository.findAccountByUsername(username);
     }
 }

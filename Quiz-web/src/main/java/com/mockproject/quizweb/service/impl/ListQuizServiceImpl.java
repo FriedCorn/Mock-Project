@@ -75,4 +75,9 @@ public class ListQuizServiceImpl implements ListQuizService {
     public void create(ListQuiz listQuiz) {
         listQuizRepository.save(listQuiz);
     }
+
+    @Override
+    public List<ListQuiz> getAllListQuiz() {
+        return listQuizRepository.findAll();
+    }
 }
