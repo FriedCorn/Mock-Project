@@ -16,13 +16,14 @@ public class AnswerHistory {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "quiz_history_id", referencedColumnName = "id", nullable = false)
     private QuizHistory quizHistoryByQuizHistoryId;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
 

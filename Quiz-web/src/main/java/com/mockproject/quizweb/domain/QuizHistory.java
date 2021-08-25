@@ -18,6 +18,7 @@ public class QuizHistory {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Basic
@@ -28,7 +29,7 @@ public class QuizHistory {
     @Column(name = "time_started")
     private String timeStarted;
 
-    @OneToMany(mappedBy = "quizHistoryByQuizHistoryId", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quizHistoryByQuizHistoryId")
     @ToString.Exclude
     private List<AnswerHistory> answerHistories;
 
