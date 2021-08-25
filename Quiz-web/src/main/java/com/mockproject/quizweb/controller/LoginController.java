@@ -44,8 +44,14 @@ public class LoginController {
     @PostMapping(value = {"/signup"})
     public ModelAndView postSignup(ModelAndView mv, @ModelAttribute("account") Account account) {
         if (accountService.findAccountByUsername(account.getUsername()) != null) {
-            mv.setViewName("signup");
             mv.addObject("error", "*** Username is existed ***");
+            // mv.setViewName("signup");
+            return mv;
+        }
+
+        if (accountService.findAccountByEmail(account.getEmail()) != null) {
+            mv.addObject("error", "*** Email is exsited ***");
+            // mv.setViewName("signup");
             return mv;
         }
 
@@ -55,6 +61,7 @@ public class LoginController {
         account.setRoles(roles);
         accountService.save(account);
 
+        mv.clear();
         mv.setViewName("signup");
         mv.addObject("success", "Signup successfully !");
         return mv;

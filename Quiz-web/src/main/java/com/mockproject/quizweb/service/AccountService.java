@@ -18,4 +18,6 @@ public interface AccountService {
     Account getById(int id);
 
     Account findAccountByUsername(String username);
+
+    Account findAccountByEmail(String email);
 }
