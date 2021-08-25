@@ -110,8 +110,8 @@ public class PlayQuizController {
                     continue;
                 }
                 Duration dur = Duration.between(start, now);
-                ret = dur.toSeconds() / 60 + ":" +
-                        dur.toSeconds() % 60;
+                ret = dur.getSeconds() / 60 + ":" +
+                        dur.getSeconds() % 60;
             }
         }
         else {
