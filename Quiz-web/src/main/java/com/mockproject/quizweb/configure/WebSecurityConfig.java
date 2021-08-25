@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,17 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // Non-login required
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
-
-        // ROLE_USER or ROLE_ADMIN required.
-        // If not, redirect to /login.
-        http.authorizeRequests().antMatchers("/userInfo", "/account/{accountId}", "/play-quiz/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-
-        // ROLE_ADMIN
-        http.authorizeRequests().antMatchers("/account", "/account/list").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/", "/login", "/logout",
+                "/webjars/**", "/css/**", "/js/**", "/img/**").permitAll();
 
         // AccessDeniedException
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+        // Authorized all
+        http.authorizeRequests().anyRequest().authenticated();
 
         // Login Form.
         http.authorizeRequests().and().formLogin()
@@ -59,6 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 }
