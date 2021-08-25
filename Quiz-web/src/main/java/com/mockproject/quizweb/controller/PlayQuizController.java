@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -33,14 +36,20 @@ public class PlayQuizController {
                               Principal principal) {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         String remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
+        QuizHistory quizHistory = quizHistoryService.getDoingQuiz(listQuiz, principal.getName());
         if (remainTime.compareTo("This quiz has ended!") == 0) {
             model.addAttribute("error", remainTime);
         }
+        Quiz quiz = listQuiz.getQuizzes().get(0);
         model.addAttribute("time", remainTime);
         model.addAttribute("list_quiz_id", list_quiz_id);
         model.addAttribute("current", 1);
         model.addAttribute("total", listQuiz.getNumberOfQuiz());
-        model.addAttribute("quiz", listQuiz.getQuizzes().get(0));
+        model.addAttribute("quiz", quiz);
+        if (quizHistory != null) {
+            boolean[] oldAns = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
+            model.addAttribute("oldAns", oldAns);
+        }
         return "playQuiz";
     }
 
@@ -71,29 +80,20 @@ public class PlayQuizController {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(listQuiz, principal.getName());
         Quiz quiz = listQuiz.getQuizzes().get(quiz_number);
-        assert quizHistory != null;
-        boolean[] oldAns = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
-        if (quizHistory.getAnswerHistories() == null) {
-            quizHistory.setAnswerHistories(new ArrayList<>());
-        }
-        for (int i = 0; i < 4; i++) {
-            if (answer[i] ^ oldAns[i]) {
-                if (answer[i]) {
-                    AnswerHistory answerHistory = new AnswerHistory();
-                    answerHistory.setAnswer(quiz.getAnswers().get(i));
-                    answerHistory.setQuizHistoryByQuizHistoryId(quizHistory);
-                    quizHistory.getAnswerHistories().add(answerHistory);
-                }
-                else {
-                    AnswerHistory answerHistory = quizHistoryService.getAnswerHistoryByQuizHistoryAndAnswerId(quizHistory,
-                            quiz.getAnswers().get(i).getId());
-                    answerHistoryService.delete(answerHistory);
-                    quizHistory.getAnswerHistories().remove(answerHistory);
-                }
-            }
-        }
-        quizHistoryService.save(quizHistory);
+        answerHistoryService.updateAnswerHistory(answer, quiz, quizHistory);
         return "success";
+    }
+
+    @PostMapping(value = "/{list_quiz_id}/summit", produces = "application/json")
+    public String finishQuiz(@PathVariable Integer list_quiz_id,
+                                           Principal principal) {
+        QuizHistory quizHistory = quizHistoryService.getDoingQuiz(list_quiz_id, principal.getName());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        quizHistory.setTimeAnswered(dtf.format(now));
+        quizHistoryService.save(quizHistory);
+        // Todo: Calculate Mark
+        return "successPage";
     }
 
 

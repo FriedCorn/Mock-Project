@@ -16,7 +16,6 @@
   var current = /*[[${current}]]*/ 1;
   var total = /*[[${total}]]*/ 15;
   var list_quiz_id = /*[[${list_quiz_id}]]*/ 1;
-  var checked = [$("#ans__a"), $("#ans__b"), $("#ans__c"), $("#ans__d")];
 </script>
 </head>
   <body>
@@ -31,21 +30,21 @@
         <div class="answer">
           <div class="row">
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__a">
+              <input type="checkbox" id="ans__a" th:checked="${oldAns[0]}">
               <div class="answer__a checkmark" th:text="${quiz.getAnswers().get(0).getContent()}"></div>
             </label>
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__b">
+              <input type="checkbox" id="ans__b" th:checked="${oldAns[1]}">
               <div class="answer__b checkmark" th:text="${quiz.getAnswers().get(1).getContent()}"></div>
             </label>
           </div>
           <div class="row">
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__c">
+              <input type="checkbox" id="ans__c" th:checked="${oldAns[2]}">
               <div class="answer__c checkmark" th:text="${quiz.getAnswers().get(2).getContent()}"></div>
             </label>
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__d">
+              <input type="checkbox" id="ans__d" th:checked="${oldAns[3]}">
               <div class="answer__d checkmark" th:text="${quiz.getAnswers().get(3).getContent()}"></div>
             </label>
           </div>
