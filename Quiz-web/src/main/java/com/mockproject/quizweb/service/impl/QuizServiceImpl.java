@@ -22,12 +22,17 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public void create(Quiz quiz) {
+        quizRepository.save(quiz);
+    }
+
+    @Override
     public void update(Quiz quiz) {
         quizRepository.save(quiz);
     }
 
     @Override
-    public void create(Quiz quiz) {
-      quizRepository.save(quiz);
+    public Quiz getQuizById(int quiz_id) {
+        return quizRepository.getQuizById(quiz_id);
     }
 }
