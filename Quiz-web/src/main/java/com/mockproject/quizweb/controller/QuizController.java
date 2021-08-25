@@ -71,6 +71,8 @@ public class QuizController {
         }
         quiz.setAnswers(answerList);
         quiz.setListQuiz(listQuizById);
+        int current = listQuizById.getNumberOfQuiz();
+        listQuizById.setNumberOfQuiz(current+1);
         return "";
         
 
