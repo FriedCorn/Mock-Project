@@ -68,4 +68,9 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.save(updateAccount);
         }
     }
+
+    @Override
+    public Account findAccountByEmail(String email) {
+        return accountRepository.findAccountByEmail(email);
+    }
 }
