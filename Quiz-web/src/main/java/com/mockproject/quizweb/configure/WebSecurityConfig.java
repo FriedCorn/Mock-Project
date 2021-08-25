@@ -54,11 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Login summit url.
                 .loginProcessingUrl("/login-process")
                 .loginPage("/login")
-                .defaultSuccessUrl("/instructor-home-page")
+                .defaultSuccessUrl("/student-home-page")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 }
