@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Login summit url.
                 .loginProcessingUrl("/login-process")
                 .loginPage("/login")
-                .defaultSuccessUrl("/play-quiz/1")
+                .defaultSuccessUrl("/instructor-home-page")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")

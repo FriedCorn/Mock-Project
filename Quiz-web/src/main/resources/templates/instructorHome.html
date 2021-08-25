@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/instructorHome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!--/CSS-->
+    <title>Instructor Home Page</title>
+</head>
+
+<body>
+    <!--Lib JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="js/instructorHome.js"></script>
+    <!---->
+    <header>
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-dark p-4">
+                <h5 class="text-white h4">Collapsed content</h5>
+                <span class="text-muted">Toggleable via the navbar brand.</span>
+            </div>
+        </div>
+        <nav class="nav navbar-expand-lg main-header">
+            <div class="main-logo">
+                <a href="#">
+                    <img class="nav-brand" src="https://cf.quizizz.com/img/quizizz_logos/white-brandmark-600x164.png"
+                        alt="Quizizz">
+                </a>
+            </div>
+            <div class="main-search">
+                <form class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search-logo"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search" size="130">
+                    </div>
+                </form>
+            </div>
+
+            <div class="main-header-right">
+                <a class="join-game-btn " href="/join" target="_blank">Enter Code</a>
+                <button class="btn expand-nav" id="expand-btn" onclick=""><i class="fa fa-bars"
+                        aria-hidden="true"></i></button>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <table width="100%" cellpadding="10" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td width="20%" valign="top">
+                        <div class="side-bar">
+                            <div class="side-bar-header">
+                                <h4 style="width: 50%;" class="nav-name" th:if="${account}" th:text="${account.username}"></h4>
+                                <h4 style="width: 50%;" class="nav-name" th:unless="${account}">NULL</h4>
+                                <button style="width: 100%;" class="create-btn popup-button" onclick="openForm()"><i
+                                        class="fa fa-plus-circle" aria-hidden="true"></i>  Create quiz</button>
+                            </div>
+                            <div class="separate">
+                                <hr>
+                            </div>
+                            <div class="side-bar-content">
+                                <ul>
+                                    <a href="/instructor-home-page" style="text-decoration: none;"><li><h5 style="color:purple"><i class="fas fa-map-marked-alt"></i> Explore</h5></li></a>
+                                    <a href="/instructor-library-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-folder-open" aria-hidden="true"></i> My library</h5></li></a>
+                                    <a href="/instructor-report-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-bar-chart"></i> Report</h5></li></a>
+                                    <hr>
+                                    <a href="/instructor-profile-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fas fa-user-alt"></i> Profile</h5></li></a>
+                                    <a href="/logout" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5></li></a>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="80%" valign="top">
+                        <!--Content-->
+                        <div class="instructor-content">
+                            <div class="welcome-name">
+                                <h1 th:if=${account} th:text='${"Welcome, "+ account.firstName}'>Welcome, Name</h1>
+                                <h1 th:unless=${account}>Welcome, NULL</h1>
+                            </div>
+                            <div class="content-quiz" th:if=${listQuizList}>
+
+                                <!-- <div th:each="category : ${categoryList}">
+                                    <b th:text="${category.name}"></b><br>
+                                    <i th:each="listQuiz: ${listQuizList}" th:if="${listQuiz.category.name == category.name}"
+                                        th:text=${listQuiz.name}></i>
+                                </div> -->
+                                
+                                <!--Category 1-->
+                                <div class="quiz-category" th:each="category : ${categoryList}">
+                                    <h3 th:text=${category.name}></h3>
+                                    <div class="row">
+                                        <!---->
+                                        <div style="padding-bottom:30px;" class="col col-sm-3" th:each="listQuiz: ${listQuizList}" th:if="${listQuiz.category.name == category.name}">
+                                            <div class="card" style="width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
+                                                <img style="border-top-left-radius: 10px; border-top-right-radius: 10px;" class="card-img-top"
+                                                    src="https://quizizz.com/_media/questions/3738117f-db72-4963-9193-16bbe0b55f8a_200_200"
+                                                    alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" th:text=${listQuiz.name}></h5>
+
+                                                    <a href="#" class="btn btn-primary">Play it!</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!---->
+                                    </div>
+                                    <hr style="border: 1 solid #a3a3a3;">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--/Content-->
+    </div>
+
+    <link rel="stylesheet" href="/css/popupStyle.css">
+    <div class="form-popup" id="myForm">
+        <form class="form-container" th:object="${listQuizForm}" th:action="@{/createListQuiz}" method="POST">
+            <div><b>Quiz name</b></div>
+            <input type="text" th:field="*{quizName}" required autocomplete="off">
+
+            <div><b>Category name</b></div>
+            <input list="categoryList" th:field="*{categoryName}" required autocomplete="off">
+            <datalist id="categoryList">
+                <th:block th:each="category: ${categoryList}">
+                    <option th:value="${category.name}"></option>
+                </th:block>
+            </datalist>
+
+            <div><b>Time limit</b></div>
+            <select id="hour" th:field="*{timeLimitHour}">
+                <option value=00>00</option>
+                <option value=01>01</option>
+                <option value=02>02</option>
+                <option value=03>03</option>
+                <option value=04>04</option>
+                <option value=05>05</option>
+                <option value=06>06</option>
+                <option value=07>07</option>
+                <option value=08>08</option>
+                <option value=09>09</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
+                <option value=13>13</option>
+                <option value=14>14</option>
+                <option value=15>15</option>
+                <option value=16>16</option>
+                <option value=17>17</option>
+                <option value=18>18</option>
+                <option value=19>19</option>
+                <option value=20>20</option>
+                <option value=21>21</option>
+                <option value=22>22</option>
+                <option value=23>23</option>
+                <option value=24>24</option>
+            </select>
+            <span>:</span>
+            <select id="minute" th:field="*{timeLimitMinute}">
+                <option value=00 selected>00</option>
+                <option value=01>01</option>
+                <option value=02>02</option>
+                <option value=03>03</option>
+                <option value=04>04</option>
+                <option value=05>05</option>
+                <option value=06>06</option>
+                <option value=07>07</option>
+                <option value=08>08</option>
+                <option value=09>09</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
+                <option value=13>13</option>
+                <option value=14>14</option>
+                <option value=15>15</option>
+                <option value=16>16</option>
+                <option value=17>17</option>
+                <option value=18>18</option>
+                <option value=19>19</option>
+                <option value=20>20</option>
+                <option value=21>21</option>
+                <option value=22>22</option>
+                <option value=23>23</option>
+                <option value=24>24</option>
+                <option value=25>25</option>
+                <option value=26>26</option>
+                <option value=27>27</option>
+                <option value=28>28</option>
+                <option value=29>29</option>
+                <option value=30>30</option>
+                <option value=31>31</option>
+                <option value=32>32</option>
+                <option value=33>33</option>
+                <option value=34>34</option>
+                <option value=35>35</option>
+                <option value=36>36</option>
+                <option value=37>37</option>
+                <option value=38>38</option>
+                <option value=39>39</option>
+                <option value=40>40</option>
+                <option value=41>41</option>
+                <option value=42>42</option>
+                <option value=43>43</option>
+                <option value=44>44</option>
+                <option value=45>45</option>
+                <option value=46>46</option>
+                <option value=47>47</option>
+                <option value=48>48</option>
+                <option value=49>49</option>
+                <option value=50>50</option>
+                <option value=51>51</option>
+                <option value=52>52</option>
+                <option value=53>53</option>
+                <option value=54>54</option>
+                <option value=55>55</option>
+                <option value=56>56</option>
+                <option value=57>57</option>
+                <option value=58>58</option>
+                <option value=59>59</option>
+            </select>
+            <span>:</span>
+            <select id="second" th:field="*{timeLimitSecond}">
+                <option value=00 selected>00</option>
+                <option value=01>01</option>
+                <option value=02>02</option>
+                <option value=03>03</option>
+                <option value=04>04</option>
+                <option value=05>05</option>
+                <option value=06>06</option>
+                <option value=07>07</option>
+                <option value=08>08</option>
+                <option value=09>09</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
+                <option value=13>13</option>
+                <option value=14>14</option>
+                <option value=15>15</option>
+                <option value=16>16</option>
+                <option value=17>17</option>
+                <option value=18>18</option>
+                <option value=19>19</option>
+                <option value=20>20</option>
+                <option value=21>21</option>
+                <option value=22>22</option>
+                <option value=23>23</option>
+                <option value=24>24</option>
+                <option value=25>25</option>
+                <option value=26>26</option>
+                <option value=27>27</option>
+                <option value=28>28</option>
+                <option value=29>29</option>
+                <option value=30>30</option>
+                <option value=31>31</option>
+                <option value=32>32</option>
+                <option value=33>33</option>
+                <option value=34>34</option>
+                <option value=35>35</option>
+                <option value=36>36</option>
+                <option value=37>37</option>
+                <option value=38>38</option>
+                <option value=39>39</option>
+                <option value=40>40</option>
+                <option value=41>41</option>
+                <option value=42>42</option>
+                <option value=43>43</option>
+                <option value=44>44</option>
+                <option value=45>45</option>
+                <option value=46>46</option>
+                <option value=47>47</option>
+                <option value=48>48</option>
+                <option value=49>49</option>
+                <option value=50>50</option>
+                <option value=51>51</option>
+                <option value=52>52</option>
+                <option value=53>53</option>
+                <option value=54>54</option>
+                <option value=55>55</option>
+                <option value=56>56</option>
+                <option value=57>57</option>
+                <option value=58>58</option>
+                <option value=59>59</option>
+            </select>
+
+            <button type="submit" class="btn"><b>Create</b></button>
+            <button type="button" class="btn cancel" onclick="closeForm()"><b>Close</b></button>
+        </form>
+    </div>
+
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
