@@ -20,8 +20,7 @@ function showRemainingTime() {
     }
     if (remainder !== 0) {
         if (parseInt(time[0], 10) === 0) {
-            // Todo: Summit Answer
-            remainder = -1;
+
         }
         else {
             time[0] = parseInt(time[0], 10) - 1;
@@ -50,6 +49,23 @@ function updatePage(res) {
     updateAnswer(res["answer"]);
 }
 
+function finished() {
+    summitAnswer();
+    if (confirm("Do you want to summit answer")) {
+        $.ajax({
+            url: '/play-quiz/' + list_quiz_id + "/summit",
+            type: 'POST',
+            success: function(data) {
+                current += 1;
+                updatePage(data);
+            },
+            error: function() {
+                console.log("Error occur when sending data");
+            }
+        });
+    }
+}
+
 function summitAnswer() {
     $.ajax({
         url: '/play-quiz/' + list_quiz_id,
@@ -73,11 +89,11 @@ function summitAnswer() {
 
 $("#next_btn").click(function() {
     if (current < total) {
+        summitAnswer();
         $.ajax({
             url: '/play-quiz/' + list_quiz_id + "/quiz?quiz_number=" + current,
             type: 'GET',
             success: function(data) {
-                summitAnswer();
                 current += 1;
                 updatePage(data);
             },
@@ -85,6 +101,9 @@ $("#next_btn").click(function() {
                 console.log("Error occur when sending data");
             }
         });
+    }
+    else if (current === total) {
+        finished();
     }
 })
 
