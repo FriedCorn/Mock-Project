@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // ROLE_USER or ROLE_ADMIN required.
         // If not, redirect to /login.
-        http.authorizeRequests().antMatchers("/userInfo", "/account/{accountId}").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/userInfo", "/account/{accountId}", "/play-quiz/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         // ROLE_ADMIN
         http.authorizeRequests().antMatchers("/account", "/account/list").access("hasRole('ROLE_ADMIN')");
@@ -52,9 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Login Form.
         http.authorizeRequests().and().formLogin()
                 // Login summit url.
-                .loginProcessingUrl("/j_spring_security_check")
+                .loginProcessingUrl("/login-process")
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/play-quiz/1")
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")

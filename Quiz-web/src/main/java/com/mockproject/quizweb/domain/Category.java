@@ -23,7 +23,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @OneToMany(mappedBy = "category")
     @ToString.Exclude
     private List<ListQuiz> listQuizzes;
 

@@ -1,5 +1,6 @@
 package com.mockproject.quizweb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -28,10 +29,12 @@ public class Answer {
     @Column(name = "img_src")
     private String imgSrc;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "quiz_id", referencedColumnName = "id", nullable = false)
     private Quiz quizByQuizId;
 
+    @JsonIgnore
     @Basic
     @Column(name = "is_true_answer")
     private boolean isTrueAnswer;
