@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <!--/CSS-->
     <title>Instructor Home Page</title>
 </head>
@@ -56,9 +56,12 @@
             </div>
 
             <div class="main-header-right">
-                <a class="join-game-btn " href="/join" target="_blank">Enter Code</a>
-                <button class="btn expand-nav" id="expand-btn" onclick=""><i class="fa fa-bars"
-                        aria-hidden="true"></i></button>
+                <a class="join-game-btn " href="/search">Search</a>
+            </div>
+
+            <div class="main-header-right">
+                <a class="join-game-btn " href="/student-home">Student Mode</a>
+            </div>
         </nav>
     </header>
     <div class="container-fluid">
@@ -68,22 +71,45 @@
                     <td width="20%" valign="top">
                         <div class="side-bar">
                             <div class="side-bar-header">
-                                <h4 style="width: 50%;" class="nav-name" th:if="${account}" th:text="${account.username}"></h4>
+                                <h4 style="width: 50%;" class="nav-name" th:if="${account}"
+                                    th:text="${account.username}"></h4>
                                 <h4 style="width: 50%;" class="nav-name" th:unless="${account}">NULL</h4>
                                 <button style="width: 100%;" class="create-btn popup-button" onclick="openForm()"><i
-                                        class="fa fa-plus-circle" aria-hidden="true"></i>  Create quiz</button>
+                                        class="fa fa-plus-circle" aria-hidden="true"></i> Create quiz</button>
                             </div>
                             <div class="separate">
                                 <hr>
                             </div>
                             <div class="side-bar-content">
                                 <ul>
-                                    <a href="/instructor-home-page" style="text-decoration: none;"><li><h5 style="color:purple"><i class="fas fa-map-marked-alt"></i> Explore</h5></li></a>
-                                    <a href="/instructor-library-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-folder-open" aria-hidden="true"></i> My library</h5></li></a>
-                                    <a href="/instructor-report-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-bar-chart"></i> Report</h5></li></a>
+                                    <a href="/instructor-home" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:purple"><i class="fas fa-map-marked-alt"></i> Explore</h5>
+                                        </li>
+                                    </a>
+                                    <a href="/instructor-library" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fa fa-folder-open" aria-hidden="true"></i>
+                                                My library</h5>
+                                        </li>
+                                    </a>
+                                    <a href="/instructor-report" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fa fa-bar-chart"></i> Report</h5>
+                                        </li>
+                                    </a>
                                     <hr>
-                                    <a href="/instructor-profile-page" style="text-decoration: none;"><li><h5 style="color:black"><i class="fas fa-user-alt"></i> Profile</h5></li></a>
-                                    <a href="/logout" style="text-decoration: none;"><li><h5 style="color:black"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5></li></a>
+                                    <a href="/instructor-profile" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fas fa-user-alt"></i> Profile</h5>
+                                        </li>
+                                    </a>
+                                    <a href="/logout" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                Logout</h5>
+                                        </li>
+                                    </a>
                                 </ul>
                             </div>
                         </div>
@@ -102,15 +128,19 @@
                                     <i th:each="listQuiz: ${listQuizList}" th:if="${listQuiz.category.name == category.name}"
                                         th:text=${listQuiz.name}></i>
                                 </div> -->
-                                
+
                                 <!--Category 1-->
                                 <div class="quiz-category" th:each="category : ${categoryList}">
                                     <h3 th:text=${category.name}></h3>
                                     <div class="row">
                                         <!---->
-                                        <div style="padding-bottom:30px;" class="col col-sm-3" th:each="listQuiz: ${listQuizList}" th:if="${listQuiz.category.name == category.name}">
-                                            <div class="card" style="width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
-                                                <img style="border-top-left-radius: 10px; border-top-right-radius: 10px;" class="card-img-top"
+                                        <div style="padding-bottom:30px;" class="col col-sm-3"
+                                            th:each="listQuiz: ${listQuizList}"
+                                            th:if="${listQuiz.category.name == category.name}">
+                                            <div class="card"
+                                                style="width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
+                                                <img style="border-top-left-radius: 10px; border-top-right-radius: 10px;"
+                                                    class="card-img-top"
                                                     src="https://quizizz.com/_media/questions/3738117f-db72-4963-9193-16bbe0b55f8a_200_200"
                                                     alt="Card image cap">
                                                 <div class="card-body">
