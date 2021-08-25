@@ -15,7 +15,6 @@ import java.util.Objects;
 @Table(name = "list_quiz")
 public class ListQuiz {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

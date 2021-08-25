@@ -70,4 +70,9 @@ public class ListQuizServiceImpl implements ListQuizService {
         }
         return ret;
     }
+
+    @Override
+    public void create(ListQuiz listQuiz) {
+        listQuizRepository.save(listQuiz);
+    }
 }
