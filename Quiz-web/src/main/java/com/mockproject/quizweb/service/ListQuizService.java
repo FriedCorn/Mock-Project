@@ -4,6 +4,7 @@ import com.mockproject.quizweb.domain.ListQuiz;
 
 public interface ListQuizService {
     ListQuiz getListQuizById(int id);
-     void create(ListQuiz listQuiz);
+    String getRemainTime(ListQuiz listQuiz, String username);
+    void create(ListQuiz listQuiz);
 
 }
