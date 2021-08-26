@@ -35,6 +35,10 @@ public class ListQuiz {
     @Column(name = "time_limit")
     private String timeLimit;
 
+    @Basic
+    @Column(name = "img_lstquiz")
+    private String imgLstquiz;
+
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;

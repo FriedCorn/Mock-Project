@@ -11,13 +11,19 @@ import com.mockproject.quizweb.service.ListQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ListQuizController {
+    final static String uploadDir = System.getProperty("user.dir")+"/Quiz-web/src/main/resources/static/image";
     private final ListQuizService listQuizService;
     private final CategoryService categoryService;
     private final AccountService accountService;
@@ -31,7 +37,10 @@ public class ListQuizController {
     }
 
     @PostMapping(value = { "/createListQuiz" })
-    public ModelAndView setCreateTest(ModelAndView mv, @ModelAttribute("listQuizForm") ListQuizForm listQuizForm) {
+    public ModelAndView setCreateTest(ModelAndView mv,
+                                      @ModelAttribute("listQuizForm") ListQuizForm listQuizForm,
+                                      @RequestParam("productImage") MultipartFile fileProductImage
+                                      ) throws IOException {
         String timeLimit = listQuizForm.getTimeLimitHour() + ":" + listQuizForm.getTimeLimitMinute() + ":"
                 + listQuizForm.getTimeLimitSecond();
 
@@ -43,6 +52,16 @@ public class ListQuizController {
         listQuiz.setTimeLimit(timeLimit);
         listQuiz.setCategory(category);
         listQuiz.setQuizzes(quizList);
+
+        String imageUUID;
+        if(!fileProductImage.isEmpty()){
+            imageUUID = fileProductImage.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(uploadDir,imageUUID);
+            Files.write(fileNameAndPath,fileProductImage.getBytes());
+        }else{
+            imageUUID=listQuizForm.getImgLstquiz();
+        }
+        listQuiz.setImgLstquiz(imageUUID);
 
         // Get account info
         Account account = accountService.getCurrentAccount();

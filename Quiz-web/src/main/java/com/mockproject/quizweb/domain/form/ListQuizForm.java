@@ -9,4 +9,5 @@ public class ListQuizForm {
     private String timeLimitHour;
     private String timeLimitMinute;
     private String timeLimitSecond;
+    private String imgLstquiz;
 }

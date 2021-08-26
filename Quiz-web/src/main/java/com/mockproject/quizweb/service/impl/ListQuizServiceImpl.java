@@ -57,7 +57,7 @@ public class ListQuizServiceImpl implements ListQuizService {
                 }
                 Duration dur = Duration.between(now, end);
                 ret = dur.toHours() + ":" + dur.toMinutes() % 60
-                        + ":" + dur.toSeconds() % 60;
+                        + ":" + dur.getSeconds() % 60;
                 return ret;
             }
         }
