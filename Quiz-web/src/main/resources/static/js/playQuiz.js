@@ -52,17 +52,7 @@ function updatePage(res) {
 function finished() {
     summitAnswer();
     if (confirm("Do you want to summit answer")) {
-        $.ajax({
-            url: '/play-quiz/' + list_quiz_id + "/summit",
-            type: 'POST',
-            success: function(data) {
-                current += 1;
-                updatePage(data);
-            },
-            error: function() {
-                console.log("Error occur when sending data");
-            }
-        });
+        window.location.replace("/play-quiz/" + list_quiz_id + "/summit");
     }
 }
 

@@ -89,18 +89,23 @@ public class PlayQuizController {
         return "success";
     }
 
-    @PostMapping(value = "/{list_quiz_id}/summit", produces = "application/json")
+    @GetMapping(value = "/{list_quiz_id}/summit")
     public String finishQuiz(Model model, @PathVariable Integer list_quiz_id,
                                            Principal principal) {
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(list_quiz_id, principal.getName());
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        quizHistory.setTimeAnswered(dtf.format(now));
-        quizHistoryService.save(quizHistory);
+        if (quizHistory != null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            quizHistory.setTimeAnswered(dtf.format(now));
+            quizHistoryService.save(quizHistory);
+        }
+        else {
+            quizHistory = quizHistoryService.getQuizHistoriesByListQuiz_IdAndAccount_Username(list_quiz_id, principal.getName()).get(0);
+        }
         model.addAttribute("listQuiz", listQuizService.getListQuizById(list_quiz_id));
         model.addAttribute("count", quizHistoryService.countTrueQuiz(quizHistory));
         model.addAttribute("total", quizHistory.getListQuiz().getNumberOfQuiz());
-        return "quiz-result";
+        return "quizResult";
     }
 
 
