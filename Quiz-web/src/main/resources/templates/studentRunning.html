@@ -82,9 +82,9 @@
                     <td width="20%" valign="top">
                         <div class="side-bar">
                             <div class="side-bar-header">
-                                <h4 style="width: 50%;" class="nav-name" th:if="${account}"
-                                    th:text="${account.username}"></h4>
-                                <h4 style="width: 50%;" class="nav-name" th:unless="${account}">NULL</h4>
+                                <h4 style="width: 50%;" class="nav-name" th:if="${username}"
+                                    th:text="${username}"></h4>
+                                <h4 style="width: 50%;" class="nav-name" th:unless="${username}">NULL</h4>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -136,20 +136,22 @@
                         <!--Content-->
                         <div class="instructor-content">
                             <div class="content-quiz" th:if="${listQuizList}">
-                                <div style="padding-bottom:30px;" class="col col-sm-3"
-                                     th:each="listQuiz: ${listQuizList}">
-                                    <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
-                                       class="card"
-                                       style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
-                                        <img th:src="@{${listQuiz.imgLstquiz}}"
-                                             style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                                        <!-- <hr> -->
-                                        <div class="card-body"
-                                             style="background-color: #7a4ab8; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                                            <h5 style="color: black; text-align:center" class="card-title"
-                                                th:text=${listQuiz.name}></h5>
-                                        </div>
-                                    </a>
+                                <div class="row">
+                                    <div style="padding-bottom:30px;" class="col col-sm-3"
+                                        th:each="listQuiz: ${listQuizList}">
+                                        <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
+                                            class="card"
+                                            style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
+                                            <img th:src="@{${listQuiz.imgLstquiz}}"
+                                                style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                            <!-- <hr> -->
+                                            <div class="card-body"
+                                                style="background-color: #7a4ab8; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                                                <h5 style="color: black; text-align:center" class="card-title"
+                                                    th:text=${listQuiz.name}></h5>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
