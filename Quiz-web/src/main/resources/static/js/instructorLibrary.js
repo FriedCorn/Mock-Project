@@ -15,6 +15,7 @@ $(document).ready(function() {
 
 function loadData(data) {
     let body = $("#quiz-body");
+    // body.childNodes.
     for (const [key, quiz] of Object.entries(data)) {
         body.append(addQuestion(quiz, key));
     }
@@ -27,16 +28,16 @@ function addQuestion(quiz, number) {
     question__head.classList.add("question__head");
     let question_name = document.createElement("div");
     question_name.classList.add("question__name");
-    question_name.innerHTML = "Question " + (number + 1);
+    question_name.innerHTML = "Question " + (parseInt(number) + 1);
     let btn__controller = document.createElement("div");
-    btn__controller.classList.add("btn__controller", "quiz_button");
+    btn__controller.classList.add("btn__controller");
     btn__controller.id = quiz["id"];
     let btn__remove = document.createElement("button");
     btn__remove.classList.add("btn__remove", "quiz_button");
     btn__remove.innerHTML = "Remove";
     btn__remove.onclick = function(event) {delete_active(event);};
     let btn__update = document.createElement("button");
-    btn__update.classList.add("btn__update");
+    btn__update.classList.add("btn__update", "quiz_button");
     btn__update.innerHTML = "Update";
     btn__update.onclick = function(event) {update_active(event);};
     btn__controller.appendChild(btn__remove);
@@ -45,7 +46,7 @@ function addQuestion(quiz, number) {
     question__head.appendChild(btn__controller);
 
     let question__body = document.createElement("div");
-    question__body.classList.add("question__body");
+    question__body.classList.add("question__body", "ans_span");
     question__body.innerHTML = quiz["content"];
 
     let question__list_answer = createListAnswer(quiz["answers"]);
@@ -82,6 +83,7 @@ function createAnswer(ans) {
     let checkmark = document.createElement("div");
     checkmark.classList.add("answer__a", "checkmark");
     let span = document.createElement("span");
+    span.classList.add("ans_span");
     span.innerHTML = ans["content"];
     if (ans["trueAnswer"]) {
         checkbox.checked = true;
@@ -98,7 +100,7 @@ function delete_active (e) {
     $(document).ready(function() {
         $.ajax({
             url: '/quiz/' + list_quiz_id + "/delete/" + e.target.parentElement.id,
-            type: 'DELETE',
+            type: 'GET',
             success: function(data) {
                 console.log(data);
                 loadData(data);

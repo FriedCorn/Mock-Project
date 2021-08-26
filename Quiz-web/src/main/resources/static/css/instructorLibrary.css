@@ -212,7 +212,7 @@
 }
 
 .question__answer {
-  font-size: 20px;
+  font-size: 3rem;
 }
 
 /* checkmark */
@@ -272,4 +272,8 @@
 
 .check_container input:checked~.checkmark:after {
   display: block;
+}
+
+.ans_span {
+  font-size: 2rem;
 }

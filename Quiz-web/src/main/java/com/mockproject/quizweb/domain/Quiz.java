@@ -32,7 +32,7 @@ public class Quiz {
     @Column(name = "img_src")
     private String imgSrc;
 
-    @OneToMany(mappedBy = "quizByQuizId")
+    @OneToMany(mappedBy = "quizByQuizId", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Answer> answers;
 

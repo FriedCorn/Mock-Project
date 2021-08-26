@@ -41,7 +41,7 @@ public class ViewQuizController {
         return listQuiz.getQuizzes();
     }
 
-    @DeleteMapping(value = "/{list_quiz_id}/delete/{quiz_id}")
+    @GetMapping(value = "/{list_quiz_id}/delete/{quiz_id}")
     public  @ResponseBody List<Quiz> deleteQuiz(@PathVariable Integer list_quiz_id,
                                                 @PathVariable Integer quiz_id) {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
