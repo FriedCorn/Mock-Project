@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,14 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // Non-login required
-        http.authorizeRequests().antMatchers("/", "/login", "/signup", "/logout",
-                "/webjars/**", "/css/**", "/js/**", "/image/**", "/search/**").permitAll();
+        http.authorizeRequests().antMatchers("/", "/login", "/logout",
+                "/webjars/**", "/css/**", "/js/**", "/image/**").permitAll();
 
         // AccessDeniedException
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Authorized all
-        http.authorizeRequests().anyRequest().hasRole("USER");
+        http.authorizeRequests().anyRequest().authenticated();
 
         // Login Form.
         http.authorizeRequests().and().formLogin()

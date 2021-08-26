@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 public class ListQuizController {
-    final static String uploadDir = System.getProperty("user.dir")+"/Quiz-web/src/main/resources/static/image";
+    final static String uploadDir = System.getProperty("user.dir")+"/Quiz-web/src/main/resources/static/imgsrc/image";
     private final ListQuizService listQuizService;
     private final CategoryService categoryService;
     private final AccountService accountService;
@@ -61,7 +61,7 @@ public class ListQuizController {
         }else{
             imageUUID=listQuizForm.getImgLstquiz();
         }
-        listQuiz.setImgLstquiz(imageUUID);
+        listQuiz.setImgLstquiz("/image/"+imageUUID);
 
         // Get account info
         Account account = accountService.getCurrentAccount();
