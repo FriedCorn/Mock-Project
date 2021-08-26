@@ -164,7 +164,7 @@
     <th:block th:if=${listQuizList}>
         <th:block th:each="listQuiz: ${listQuizList}">
             <div class="form-popup" th:id="${listQuiz.id}">
-                <form class="form-container" th:object="${listQuizForm}" th:action="${'/playQuiz/' + listQuiz.id}">
+                <form class="form-container" th:object="${listQuizForm}" th:action="${'/play-quiz/' + listQuiz.id}">
                     <img style="width: 100%;" src="/image/quiz.jpg">
                     <h1 style="width:300px" th:text=${listQuiz.name}></h1>
                     <hr>
