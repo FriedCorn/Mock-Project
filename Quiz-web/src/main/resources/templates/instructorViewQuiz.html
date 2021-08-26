@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/instructorLibrary.css}">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -79,8 +80,6 @@
                                 <button style="width: 100%;" class="create-btn popup-button"
                                     onclick="openForm('myForm')"><span><i class="fa fa-plus-circle"
                                             aria-hidden="true"></i> Create quiz</span></button>
-                                <button style="width: 100%;" type="button"
-                                        onclick="openForm('addQuestionPopup')"><span>add question</span></button>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -116,6 +115,7 @@
                                                 Logout</h5>
                                         </li>
                                     </a>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -127,9 +127,7 @@
                             <!--Quiz-->
                             <div class="row quiz-detailed align-middle">
                                 <div class="col col-sm-4">
-                                    <img class="quiz-img"
-                                         th:src="@{${listQuiz.imgLstquiz}}"
-                                         alt="Card image cap">
+                                    <img class="quiz-img" th:src="@{${listQuiz.imgLstquiz}}" alt="Card image cap">
                                     <div>
                                         <h5 th:text=${listQuiz.name}></h5>
                                         <p th:text=${listQuiz.category.name}></p>
@@ -141,11 +139,14 @@
                                 </div>
                                 <div class="col">
                                     <div class="align-middle code-block">
-                                        <span class="code-background">CODE:<span class="code-content" th:text=${listQuiz.id}></span></span>
+                                        <span class="code-background">CODE:<span class="code-content"
+                                                th:text=${listQuiz.id}></span></span>
                                     </div>
                                 </div>
                             </div>
                             <!--/Quiz-->
+
+                            <button class="create-btn popup-button" onclick="openForm('addQuestionPopup')" style="height: 50px; width:12%;">Add Question</button>
 
                             <!--List Quiz-->
                             <div id="quiz-body"></div>
@@ -158,8 +159,9 @@
         </table>
         <!--/Content-->
     </div>
-    <div class="form-popup" id="addQuestionPopup">
-        <form class="form-container" th:object="${quizForm}" th:action="${'createQuiz/' + listQuiz.id}" method="POST" >
+    <link rel="stylesheet" th:href="@{/css/popupStyle.css}">
+    <div class="form-popup" id="addQuestionPopup" style="top:10%">
+        <form class="form-container" th:object="${quizForm}" th:action="${'/createQuiz/' + listQuiz.id}" method="POST">
             <div><b>Question</b></div>
             <input type="text" th:field="*{question}" required autocomplete="off">
 
@@ -173,10 +175,16 @@
             <input type="text" th:field="*{choice[3]}" required>
 
             <div><b>Correct Answer</b></div>
-            <input type="text" th:field="*{answer}" required autocomplete="off">
+            <!-- <input list="correct" type="text" th:field="*{answer}" required> -->
+            <select id="hour" th:field="*{answer}">
+                <option value=A>A</option>
+                <option value=B>B</option>
+                <option value=C>C</option>
+                <option value=D>D</option>
+            </select>
 
             <button type="submit" class="btn"><b>Create</b></button>
-            <button type="button" class="btn cancel" onclick="closeForm('myForm')"><b>Close</b></button>
+            <button type="button" class="btn cancel" onclick="closeForm('addQuestionPopup')"><b>Close</b></button>
         </form>
     </div>
     <script>

@@ -2,6 +2,7 @@ package com.mockproject.quizweb.controller;
 
 import com.mockproject.quizweb.domain.ListQuiz;
 import com.mockproject.quizweb.domain.Quiz;
+import com.mockproject.quizweb.domain.form.QuizForm;
 import com.mockproject.quizweb.service.ListQuizService;
 import com.mockproject.quizweb.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class ViewQuizController {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         model.addAttribute("listQuiz", listQuiz);
         model.addAttribute("username", principal.getName());
+        model.addAttribute("quizForm", new QuizForm());
         return "instructorViewQuiz";
     }
 
