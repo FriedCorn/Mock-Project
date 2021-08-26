@@ -134,7 +134,7 @@
                                             <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
                                                 class="card"
                                                 style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
-                                                <img src="/image/quiz.jpg"
+                                                <img th:src="@{${listQuiz.imgLstquiz}}"
                                                     style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                                                 <!-- <hr> -->
                                                 <div class="card-body"
