@@ -80,4 +80,9 @@ public class ListQuizServiceImpl implements ListQuizService {
     public List<ListQuiz> getAllListQuiz() {
         return listQuizRepository.findAll();
     }
+
+    @Override
+    public List<ListQuiz> getListQuizByAccountUsername(String username) {
+        return listQuizRepository.findListQuizByAccountUsername(username);
+    }
 }

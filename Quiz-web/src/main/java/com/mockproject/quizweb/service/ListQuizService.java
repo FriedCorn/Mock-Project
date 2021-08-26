@@ -9,5 +9,6 @@ public interface ListQuizService {
     String getRemainTime(ListQuiz listQuiz, String username);
     void create(ListQuiz listQuiz);
     List<ListQuiz> getAllListQuiz();
+    List<ListQuiz> getListQuizByAccountUsername(String username);
 
 }
