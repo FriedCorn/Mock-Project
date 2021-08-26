@@ -39,29 +39,9 @@ public class AnswerHistoryServiceImpl implements AnswerHistoryService {
         answerHistoryRepository.deleteById(ansHistory);
     }
 
-    public boolean[] getAnswerHistoryByQuiz(QuizHistory quizHistory, Quiz quiz) {
-        List<Answer> answers = new ArrayList<>();
-        for (AnswerHistory answerHistory: quizHistory.getAnswerHistories()) {
-            if (answerHistory.getAnswer().getQuizByQuizId() == quiz) {
-                answers.add(answerHistory.getAnswer());
-            }
-        }
-        boolean[] ret = {false, false, false, false};
-        int index = 0;
-        for (Answer answer: quiz.getAnswers()) {
-            if (answers.contains(answer)) {
-                ret[index++] = true;
-            }
-            else {
-                index++;
-            }
-        }
-        return ret;
-    }
-
     @Override
     public void updateAnswerHistory(boolean[] newAns, Quiz quiz, QuizHistory quizHistory) {
-        boolean[] oldAns = getAnswerHistoryByQuiz(quizHistory, quiz);
+        boolean[] oldAns = quizHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
         if (quizHistory.getAnswerHistories() == null) {
             quizHistory.setAnswerHistories(new ArrayList<>());
         }

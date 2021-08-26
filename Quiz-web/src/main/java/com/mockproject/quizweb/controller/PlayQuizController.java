@@ -51,7 +51,7 @@ public class PlayQuizController {
         model.addAttribute("quiz", quiz);
         if (quizHistory != null) {
             if (quizHistory.getAnswerHistories() != null) {
-                boolean[] oldAns = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
+                boolean[] oldAns = quizHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
                 model.addAttribute("oldAns", oldAns);
             }
         }
@@ -68,7 +68,7 @@ public class PlayQuizController {
         Quiz quiz = listQuiz.getQuizzes().get(quiz_number);
         ret.put("quiz", quiz);
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(listQuiz, principal.getName());
-        boolean[] ansHistoryOfQuiz = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
+        boolean[] ansHistoryOfQuiz = quizHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
         ret.put("answer", ansHistoryOfQuiz);
         return ret;
     }
@@ -90,15 +90,16 @@ public class PlayQuizController {
     }
 
     @PostMapping(value = "/{list_quiz_id}/summit", produces = "application/json")
-    public String finishQuiz(@PathVariable Integer list_quiz_id,
+    public String finishQuiz(Model model, @PathVariable Integer list_quiz_id,
                                            Principal principal) {
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(list_quiz_id, principal.getName());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         quizHistory.setTimeAnswered(dtf.format(now));
         quizHistoryService.save(quizHistory);
-        // Todo: Calculate Mark
-        return "successPage";
+        model.addAttribute("count", quizHistoryService.countTrueQuiz(quizHistory));
+        model.addAttribute("total", quizHistory.getListQuiz().getNumberOfQuiz());
+        return "quiz-result";
     }
 
 

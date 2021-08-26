@@ -2,6 +2,7 @@ package com.mockproject.quizweb.service;
 
 import com.mockproject.quizweb.domain.AnswerHistory;
 import com.mockproject.quizweb.domain.ListQuiz;
+import com.mockproject.quizweb.domain.Quiz;
 import com.mockproject.quizweb.domain.QuizHistory;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface QuizHistoryService {
     QuizHistory getDoingQuiz(ListQuiz listQuiz, String username);
     AnswerHistory getAnswerHistoryByQuizHistoryAndAnswerId(QuizHistory quizHistory, int answerId);
     QuizHistory newQuizHistory(ListQuiz listQuiz, String username);
+    int countTrueQuiz(QuizHistory quizHistory);
+    boolean[] getAnswerHistoryByQuiz(QuizHistory quizHistory, Quiz quiz);
 }
