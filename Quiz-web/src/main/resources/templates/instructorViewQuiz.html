@@ -67,6 +67,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container-fluid" id="container-fluid" style="margin-top: 60px;">
         <table width="100%" cellpadding="10" cellspacing="0">
             <tbody>
@@ -78,6 +79,8 @@
                                 <button style="width: 100%;" class="create-btn popup-button"
                                     onclick="openForm('myForm')"><span><i class="fa fa-plus-circle"
                                             aria-hidden="true"></i> Create quiz</span></button>
+                                <button style="width: 100%;" type="button"
+                                        onclick="openForm('addQuestionPopup')"><span>add question</span></button>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -155,7 +158,27 @@
         </table>
         <!--/Content-->
     </div>
+    <div class="form-popup" id="addQuestionPopup">
+        <form class="form-container" th:object="${quizForm}" th:action="${'createQuiz/' + listQuiz.id}" method="POST" >
+            <div><b>Question</b></div>
+            <input type="text" th:field="*{question}" required autocomplete="off">
 
+            <div><b>A</b></div>
+            <input type="text" th:field="*{choice[0]}" required>
+            <div><b>B</b></div>
+            <input type="text" th:field="*{choice[1]}" required>
+            <div><b>C</b></div>
+            <input type="text" th:field="*{choice[2]}" required>
+            <div><b>D</b></div>
+            <input type="text" th:field="*{choice[3]}" required>
+
+            <div><b>Correct Answer</b></div>
+            <input type="text" th:field="*{answer}" required autocomplete="off">
+
+            <button type="submit" class="btn"><b>Create</b></button>
+            <button type="button" class="btn cancel" onclick="closeForm('myForm')"><b>Close</b></button>
+        </form>
+    </div>
     <script>
         function openForm(id) {
             document.getElementById("container-fluid").style.filter = 'blur(3px)';

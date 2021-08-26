@@ -73,6 +73,6 @@ public class ListQuizController {
             return new ModelAndView("redirect:/login");
         }
 
-        return new ModelAndView("redirect:/quiz");
+        return new ModelAndView("redirect:/quiz/"+listQuiz.getId());
     }
 }

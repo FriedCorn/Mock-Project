@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +46,9 @@ public class QuizController {
         return "OK";
     }
 
-    @PostMapping("/quiz/add/{list_quiz_id}")
-    public String questionAdd(@ModelAttribute("question")QuizForm quizForm,
-                              @PathVariable Integer list_quiz_id){
+    @PostMapping("/createQuiz/{list_quiz_id}")
+    public ModelAndView questionAdd(@ModelAttribute("quizForm")QuizForm quizForm,
+                                    @PathVariable Integer list_quiz_id){
         List<Answer> answerList=new ArrayList<>(4);
         ListQuiz listQuizById = listQuizService.getListQuizById(list_quiz_id);
         Quiz quiz = new Quiz();
@@ -73,7 +74,7 @@ public class QuizController {
         quiz.setListQuiz(listQuizById);
         int current = listQuizById.getNumberOfQuiz();
         listQuizById.setNumberOfQuiz(current+1);
-        return "";
+        return new ModelAndView("redirect:/quiz/"+list_quiz_id);
         
 
     }
