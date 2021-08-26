@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,8 +23,12 @@ public class HomeController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = { "/"})
-    public String getListQuizForStudent(Model model) {
+    @GetMapping(value = { "/" })
+    public String getListQuizForStudent(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            model.addAttribute("username", username);
+        }
         List<Category> categoryList = categoryService.getAllCategory();
         model.addAttribute("categoryList", categoryList);
         List<ListQuiz> listQuizList = listQuizService.getAllListQuiz();

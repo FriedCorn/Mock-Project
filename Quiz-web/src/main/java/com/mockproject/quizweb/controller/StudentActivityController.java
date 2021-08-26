@@ -22,6 +22,7 @@ public class StudentActivityController {
     @GetMapping("/running")
     public String getRunning(Model model, Principal principal) {
         List<ListQuiz> quizList = quizHistoryService.getDoingQuizzes(principal.getName());
+        model.addAttribute("username", principal.getName());
         model.addAttribute("listQuizList", quizList);
         return "studentRunning";
     }
@@ -29,6 +30,7 @@ public class StudentActivityController {
     @GetMapping("/completed")
     public String getCompleted(Model model, Principal principal) {
         List<ListQuiz> quizList = quizHistoryService.getFinishedQuizzes(principal.getName());
+        model.addAttribute("username", principal.getName());
         model.addAttribute("listQuizList", quizList);
         return "studentCompleted";
     }

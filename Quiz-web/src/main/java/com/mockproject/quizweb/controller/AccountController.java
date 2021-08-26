@@ -1,8 +1,10 @@
 package com.mockproject.quizweb.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.mockproject.quizweb.domain.Account;
+import com.mockproject.quizweb.domain.form.AccountForm;
 import com.mockproject.quizweb.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,19 +32,82 @@ public class AccountController {
         return accountService.findAll();
     }
 
-    @GetMapping("/account/{accountId}")
+    @GetMapping(value = { "/account-info", "/student-profile", "/instructor-profile" })
     @ResponseBody
-    public Account accountDetail(ModelAndView mv, @PathVariable("accountId") int accountId) {
+    public ModelAndView accountDetail(ModelAndView mv, Principal principal) {
+        Account account = accountService.findAccountByUsername(principal.getName());
+        AccountForm accountForm = new AccountForm();
 
-        return accountService.getById(accountId);
+        accountForm.setDoB(account.getDoB());
+        accountForm.setEmail(account.getEmail());
+        accountForm.setFirstName(account.getFirstName());
+        accountForm.setLastName(account.getLastName());
+        accountForm.setUsername(account.getUsername());
+
+        mv.setViewName("profile");
+        mv.addObject("accountForm", accountForm);
+
+        return mv;
     }
 
-    @PostMapping("/account/update")
-    @ResponseBody
-    public Account accountUpdate(ModelAndView mv, @ModelAttribute("account") Account updateAccount) {
-        accountService.update(updateAccount);
+    @PostMapping(value = {"/account-update"})
+    // @ResponseBody
+    public ModelAndView accountUpdate(ModelAndView mv, @ModelAttribute("accountForm") AccountForm accountForm) {
+        mv.clear();
+        Account account = accountService.findAccountByUsername(accountForm.getUsername());
 
-        return updateAccount;
+        if (!accountForm.getPassword().equals("")) {
+            if (accountForm.getRePassword().equals("")) {
+                accountForm.setDoB(account.getDoB());
+                accountForm.setEmail(account.getEmail());
+                accountForm.setFirstName(account.getFirstName());
+                accountForm.setLastName(account.getLastName());
+                accountForm.setUsername(account.getUsername());
+                accountForm.setPassword("");
+                mv.addObject("accountForm", accountForm);
+                mv.setViewName("profile");
+                mv.addObject("error", "*** Re-entered password ***");
+                return mv;
+            }
+
+            if (!accountForm.getPassword().equals(accountForm.getRePassword())) {
+                accountForm.setDoB(account.getDoB());
+                accountForm.setEmail(account.getEmail());
+                accountForm.setFirstName(account.getFirstName());
+                accountForm.setLastName(account.getLastName());
+                accountForm.setUsername(account.getUsername());
+                accountForm.setPassword("");
+                accountForm.setRePassword("");
+                mv.addObject("accountForm", accountForm);
+                mv.setViewName("profile");
+                mv.addObject("error", "*** Re-entered password doesn't match ***");
+                return mv;
+            }
+
+            account.setPassword(accountForm.getPassword());
+        } else {
+            account.setPassword("");
+        }
+
+        account.setDoB(accountForm.getDoB());
+        account.setFirstName(accountForm.getFirstName());
+        account.setLastName(accountForm.getLastName());
+
+        accountService.update(account);
+
+        accountForm.setDoB(account.getDoB());
+        accountForm.setEmail(account.getEmail());
+        accountForm.setFirstName(account.getFirstName());
+        accountForm.setLastName(account.getLastName());
+        accountForm.setUsername(account.getUsername());
+        accountForm.setPassword("");
+        accountForm.setRePassword("");
+        mv.addObject("accountForm", accountForm);
+
+        mv.addObject("success", "Update infomation successfully !");
+
+        mv.setViewName("profile");
+        return mv;
     }
 
     // For Admin feature

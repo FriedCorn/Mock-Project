@@ -81,9 +81,12 @@
                     <td width="20%" valign="top">
                         <div class="side-bar">
                             <div class="side-bar-header">
-                                <a th:href="@{/login}" style="text-decoration: none;">
-                                    <h5 style="color:black"><i class="fas fa-user-alt"></i> Login</h5>
-                                </a>
+                                <button class="join-game-btn login-but" th:unless=${username}>
+                                    <a th:href="@{/login}" style="text-decoration: none;">
+                                        <h5 style="color:black"><i class="fas fa-user-alt"></i> Login</h5>
+                                    </a>
+                                </button>
+                                <h5 th:if=${username} th:text=${username}></h5>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -111,7 +114,7 @@
                         <!--Content-->
                         <div class="instructor-content">
                             <div class="welcome-name">
-                                <h1>Welcome</h1>
+                                <h1>Welcome to Quiz</h1>
                             </div>
                             <div class="content-quiz" th:if=${listQuizList}>
 
