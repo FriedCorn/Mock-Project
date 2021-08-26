@@ -152,11 +152,11 @@
                                     <!---->
                                     <a class="list-quiz-item" th:href="@{'quiz/' + ${listQuiz.id}}"
                                         style="text-decoration:none; color:black; border:1px solid #d3d3d3; border-radius: 10px;">
-                                        <div class="row">
+                                        <div class="row" style="box-shadow: 2px 5px 15px;">
                                             <div class="col col-sm-4">
                                                 <img class="quiz-img"
                                                      th:src="@{${listQuiz.imgLstquiz}}"
-                                                    alt="Card image cap">
+                                                     onerror=this.src='image/quiz.jpg'>
                                                 <div>
                                                     <h5 th:text=${listQuiz.name}></h5>
                                                     <p th:text=${listQuiz.category.name}></p>
@@ -358,7 +358,11 @@
                 <option value=58>58</option>
                 <option value=59>59</option>
             </select>
-
+            <div >
+                <b>Product Image File</b>
+            </div>
+            <input type="file" name="productImage" required id="productImage">
+            <input type="hidden" name="imgName" th:field="*{imgLstquiz}" required >
             <button type="submit" class="btn"><b>Create</b></button>
             <button type="button" class="btn cancel" onclick="closeForm('myForm')"><b>Close</b></button>
         </form>
