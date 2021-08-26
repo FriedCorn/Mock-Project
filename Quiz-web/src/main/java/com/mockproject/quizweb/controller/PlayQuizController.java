@@ -2,6 +2,7 @@ package com.mockproject.quizweb.controller;
 
 import com.mockproject.quizweb.domain.*;
 import com.mockproject.quizweb.service.AccountService;
+import com.mockproject.quizweb.service.AnswerHistoryService;
 import com.mockproject.quizweb.service.ListQuizService;
 import com.mockproject.quizweb.service.QuizHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
+
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

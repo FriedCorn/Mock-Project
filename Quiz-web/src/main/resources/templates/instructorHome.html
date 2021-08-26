@@ -131,7 +131,7 @@
 
                                 <!--Category 1-->
                                 <div class="quiz-category" th:each="category : ${categoryList}">
-                                    <h3 th:text=${category.name}></h3>
+                                    <h3 th:text=${category.name} ></h3>
                                     <div class="row">
                                         <!---->
                                         <div style="padding-bottom:30px;" class="col col-sm-3"
@@ -165,7 +165,7 @@
 
     <link rel="stylesheet" href="/css/popupStyle.css">
     <div class="form-popup" id="myForm">
-        <form class="form-container" th:object="${listQuizForm}" th:action="@{/createListQuiz}" method="POST">
+        <form class="form-container" th:object="${listQuizForm}" th:action="@{/createListQuiz}" method="POST" enctype="multipart/form-data">
             <div><b>Quiz name</b></div>
             <input type="text" th:field="*{quizName}" required autocomplete="off">
 
@@ -331,6 +331,12 @@
                 <option value=58>58</option>
                 <option value=59>59</option>
             </select>
+            <div >
+                <b>Product Image File</b>
+            </div>
+            <input type="file" name="productImage" required id="productImage">
+            <input type="hidden" name="imgName" th:field="*{imgLstquiz}" required >
+
 
             <button type="submit" class="btn"><b>Create</b></button>
             <button type="button" class="btn cancel" onclick="closeForm()"><b>Close</b></button>

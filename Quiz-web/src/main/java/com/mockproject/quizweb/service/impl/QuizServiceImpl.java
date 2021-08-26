@@ -17,6 +17,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public void create(Quiz quiz) {
+        quizRepository.save(quiz);
+    }
+
+    @Override
     public void delete(Quiz quiz) {
         quizRepository.delete(quiz);
     }
