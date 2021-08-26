@@ -78,4 +78,9 @@ public class ListQuizServiceImpl implements ListQuizService {
     public List<ListQuiz> getListQuizByAccountUsername(String username) {
         return listQuizRepository.findListQuizByAccountUsername(username);
     }
+
+    @Override
+    public List<ListQuiz> getListQuizsById(int id) {
+        return listQuizRepository.getListQuizsById(id);
+    }
 }
