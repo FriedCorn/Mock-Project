@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 function loadData(data) {
     let body = $("#quiz-body");
-    // body.childNodes.
+    body.empty();
     for (const [key, quiz] of Object.entries(data)) {
         body.append(addQuestion(quiz, key));
     }
@@ -102,7 +102,6 @@ function delete_active (e) {
             url: '/quiz/' + list_quiz_id + "/delete/" + e.target.parentElement.id,
             type: 'GET',
             success: function(data) {
-                console.log(data);
                 loadData(data);
             },
             error: function(data) {
