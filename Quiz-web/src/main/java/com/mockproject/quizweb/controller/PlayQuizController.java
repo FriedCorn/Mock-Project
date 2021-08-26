@@ -50,12 +50,13 @@ public class PlayQuizController {
         model.addAttribute("current", 1);
         model.addAttribute("total", listQuiz.getNumberOfQuiz());
         model.addAttribute("quiz", quiz);
+        boolean[] oldAns = {false, false, false, false};
         if (quizHistory != null) {
             if (quizHistory.getAnswerHistories() != null) {
-                boolean[] oldAns = quizHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
-                model.addAttribute("oldAns", oldAns);
+                oldAns = quizHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
             }
         }
+        model.addAttribute("oldAns", oldAns);
         return "playQuiz";
     }
 

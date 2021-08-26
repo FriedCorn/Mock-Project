@@ -30,21 +30,21 @@
         <div class="answer">
           <div class="row">
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__a" th:if="${oldAns}" th:checked="${oldAns[0]}">
+              <input type="checkbox" id="ans__a" th:checked="${oldAns[0]}">
               <div class="answer__a checkmark" th:text="${quiz.getAnswers().get(0).getContent()}"></div>
             </label>
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__b" th:if="${oldAns}" th:checked="${oldAns[1]}">
+              <input type="checkbox" id="ans__b" th:checked="${oldAns[1]}">
               <div class="answer__b checkmark" th:text="${quiz.getAnswers().get(1).getContent()}"></div>
             </label>
           </div>
           <div class="row">
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__c" th:if="${oldAns}" th:checked="${oldAns[2]}">
+              <input type="checkbox" id="ans__c" th:checked="${oldAns[2]}">
               <div class="answer__c checkmark" th:text="${quiz.getAnswers().get(2).getContent()}"></div>
             </label>
             <label class="col col-sm-5 check_container">
-              <input type="checkbox" id="ans__d" th:if="${oldAns}" th:checked="${oldAns[3]}">
+              <input type="checkbox" id="ans__d" th:checked="${oldAns[3]}">
               <div class="answer__d checkmark" th:text="${quiz.getAnswers().get(3).getContent()}"></div>
             </label>
           </div>
