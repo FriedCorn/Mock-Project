@@ -97,6 +97,7 @@ public class PlayQuizController {
         LocalDateTime now = LocalDateTime.now();
         quizHistory.setTimeAnswered(dtf.format(now));
         quizHistoryService.save(quizHistory);
+        model.addAttribute("listQuiz", listQuizService.getListQuizById(list_quiz_id));
         model.addAttribute("count", quizHistoryService.countTrueQuiz(quizHistory));
         model.addAttribute("total", quizHistory.getListQuiz().getNumberOfQuiz());
         return "quiz-result";
