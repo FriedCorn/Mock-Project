@@ -277,3 +277,20 @@
 .ans_span {
   font-size: 2rem;
 }
+
+#report_body {
+  font-size: medium;
+}
+
+.report_box {
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid #786E6E;
+  border-radius: 8px;
+  margin: 1rem;
+  color: black;
+}
+
+.score_bar {
+  background-image: linear-gradient(to right, #73CB86 66.6%, #F06539 66.6%)
+}

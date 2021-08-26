@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class QuizHistoryServiceImpl implements QuizHistoryService {
@@ -145,5 +147,43 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
             }
         }
         return ret;
+    }
+
+    @Override
+    public List<QuizHistory> getQuizHistoriesByListQuiz_Id(int list_id) {
+        return quizHistoryRepository.getQuizHistoriesByListQuiz_Id(list_id);
+    }
+
+    @Override
+    public List<Account> getAccountsOfQuizHistoriesByListQuiz_Id(int list_id) {
+        List<QuizHistory> quizHistoryList = getQuizHistoriesByListQuiz_Id(list_id);
+        List<Account> accountList = new ArrayList<>();
+        for (QuizHistory quizHistory: quizHistoryList) {
+            accountList.add(quizHistory.getAccount());
+        }
+        Set<Account> accountSet = new HashSet<>(accountList);
+        accountList = new ArrayList<>(accountSet);
+        return accountList;
+    }
+
+    @Override
+    public List<QuizHistory> getQuizHistoriesByListQuiz_IdAndAccount_Id(int list_id, int acc_id) {
+        return quizHistoryRepository.getQuizHistoriesByListQuiz_IdAndAccount_Id(list_id,acc_id);
+    }
+
+    @Override
+    public Float calculateMean(List<QuizHistory> quizHistoryList) {
+        int totalAnswer = 0;
+        int totalTrueAnswer = 0;
+        for (QuizHistory quizHistory: quizHistoryList) {
+            totalAnswer += quizHistory.getListQuiz().getNumberOfQuiz();
+            totalTrueAnswer += countTrueQuiz(quizHistory);
+        }
+        if (totalAnswer == 0) {
+            return 1F;
+        }
+        else {
+            return (float) totalTrueAnswer / (float) totalAnswer;
+        }
     }
 }

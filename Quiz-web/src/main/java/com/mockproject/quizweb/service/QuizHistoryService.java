@@ -1,9 +1,6 @@
 package com.mockproject.quizweb.service;
 
-import com.mockproject.quizweb.domain.AnswerHistory;
-import com.mockproject.quizweb.domain.ListQuiz;
-import com.mockproject.quizweb.domain.Quiz;
-import com.mockproject.quizweb.domain.QuizHistory;
+import com.mockproject.quizweb.domain.*;
 
 import java.util.List;
 
@@ -20,4 +17,8 @@ public interface QuizHistoryService {
     QuizHistory newQuizHistory(ListQuiz listQuiz, String username);
     int countTrueQuiz(QuizHistory quizHistory);
     boolean[] getAnswerHistoryByQuiz(QuizHistory quizHistory, Quiz quiz);
+    List<QuizHistory> getQuizHistoriesByListQuiz_Id(int list_id);
+    List<Account> getAccountsOfQuizHistoriesByListQuiz_Id(int list_id);
+    List<QuizHistory> getQuizHistoriesByListQuiz_IdAndAccount_Id(int list_id, int acc_id);
+    Float calculateMean(List<QuizHistory> quizHistoryList);
 }
