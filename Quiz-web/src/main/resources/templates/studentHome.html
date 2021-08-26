@@ -96,7 +96,7 @@
                                             </h5>
                                         </li>
                                     </a>
-                                    <a href="/student-activity-completed" style="text-decoration: none;">
+                                    <a href="/student/activity/completed" style="text-decoration: none;">
                                         <li>
                                             <h5 style="color:black"><i class="fas fa-tasks"></i>
                                                 Activity</h5>
@@ -125,7 +125,7 @@
                                 <h1 th:if=${account} th:text='${"Welcome, "+ account.firstName}'>Welcome, Name</h1>
                                 <h1 th:unless=${account}>Welcome, NULL</h1>
                             </div>
-                            <div class="content-quiz" th:if=${listQuizList}>
+                            <div class="content-quiz" th:if="${listQuizList}">
 
                                 <!--Category 1-->
                                 <div class="quiz-category" th:each="category : ${categoryList}">
