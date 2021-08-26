@@ -8,8 +8,9 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css/}" type="text/css" />
     <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}"
         type="text/css" />
-    <link rel="stylesheet" th:href="@{/css/playQuiz.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/quizResult.css}" type="text/css">
     <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
+    <link rel="stylesheet" href="/css/popupStyle.css">
     <script th:inline="javascript">
         var current = /*[[${current}]]*/ 1;
         var total = /*[[${total}]]*/ 15;
@@ -18,19 +19,24 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="form-popup" id="myForm">
-            <form class="form-container" th:object="${listQuiz}">
-                <img style="width: 100%;" src="/image/quiz.jpg">
-                <b><h1 style="width:300px" th:text=${listQuiz.name}></h1></b>
-                <h2 th:text=${listQuiz.numberOfQuiz}></h2>
+    <div class="container-fluid ">
+        <div class="row align-items-center justify-content-center">
+            <form class="form-container" style="text-align: center;" th:object="${listQuiz}">
+                <img style="width: 100%;" th:src="@{/image/quiz.jpg}">
+                <b><h1 style="width:300px;" th:text=${listQuiz.name}></h1></b>
                 <hr>
-                <h2 style="text-align: center;"><b>Result</b></h2>
-                <h2 th:text="${'Your core (true/total): ' + count  + '/' + total} "></h2>
+                <h2><b>Result</b></h2>
+                <h2 th:text="|Total quiz: ${listQuiz.numberOfQuiz}|"></h2>
+                <h2 th:text="|True answer: ${count}|"></h2>
+                <hr>
+                <a href="/student-home" style="text-decoration: none;">
+                    <h5 style="color:black;font-size: 3rem;"><i class="fas fa-home" aria-hidden="true"></i> Homepage</h5>
+                </a>
             </form>
+
         </div>
     </div>
-    <script type="text/javascript" th:src="@{/js/playQuiz.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/playQuiz.js}"></script>-->
 </body>
 
 </html>
