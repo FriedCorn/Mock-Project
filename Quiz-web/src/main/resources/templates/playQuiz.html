@@ -21,7 +21,7 @@
   <body>
     <div class="container-fluid">
       <div class="top">
-        <i class="fas fa-times"></i>
+        <a th:href="@{/student-home}"><i class="fas fa-times"></i></a>
         <span id="top__time" th:text="${time}"></span>
         <div class="top__count" th:text="|${current}/${total}|"></div>
       </div>
