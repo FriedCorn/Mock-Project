@@ -47,7 +47,7 @@ public class InstructorModeController {
         return mv;
     }
 
-    @GetMapping(value = { "/listQuiz/instructor/library", "/instructor-library" })
+    @GetMapping(value = { "/instructor-library" })
     public ModelAndView getListQuizLibrary(ModelAndView mv) {
         Account account = accountService.getCurrentAccount();
         mv.addObject("account", account);
@@ -62,6 +62,21 @@ public class InstructorModeController {
         
         mv.addObject("listQuizForm", new ListQuizForm());
         
+        return mv;
+    }
+
+    @GetMapping("/instructor-report")
+    public ModelAndView getListQuizReport(ModelAndView mv) {
+        Account account = accountService.getCurrentAccount();
+        mv.addObject("account", account);
+
+        List<Category> categoryList = categoryService.getAllCategory();
+        
+        mv.addObject("categoryList", categoryList);
+
+        mv.addObject("listQuizForm", new ListQuizForm());
+
+        mv.setViewName("instructorReport");
         return mv;
     }
 
