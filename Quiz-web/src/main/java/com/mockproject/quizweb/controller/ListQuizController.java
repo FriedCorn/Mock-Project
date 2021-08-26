@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 public class ListQuizController {
-    final static String uploadDir = System.getProperty("user.dir")+"/Quiz-web/src/main/resources/static/imgsrc/image";
+    final static String uploadDir = System.getProperty("user.dir")+"/Quiz-web/src/main/resources/static/image";
     private final ListQuizService listQuizService;
     private final CategoryService categoryService;
     private final AccountService accountService;
