@@ -14,6 +14,8 @@ public interface QuizHistoryService {
     void update(QuizHistory quizHistory);
     QuizHistory getDoingQuiz(int list_quiz_id, String username);
     QuizHistory getDoingQuiz(ListQuiz listQuiz, String username);
+    List<ListQuiz> getDoingQuizzes(String username);
+    List<ListQuiz> getFinishedQuizzes(String username);
     AnswerHistory getAnswerHistoryByQuizHistoryAndAnswerId(QuizHistory quizHistory, int answerId);
     QuizHistory newQuizHistory(ListQuiz listQuiz, String username);
     int countTrueQuiz(QuizHistory quizHistory);

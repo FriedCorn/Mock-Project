@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface QuizHistoryRepository extends JpaRepository<QuizHistory, Integer> {
     QuizHistory getQuizHistoryByAccount_Id(int account_id);
+    List<QuizHistory> getQuizHistoriesByAccount_Id(int account_id);
     List<QuizHistory> getQuizHistoriesByListQuiz_IdAndAccount_Username(int list_id, String username);
 }

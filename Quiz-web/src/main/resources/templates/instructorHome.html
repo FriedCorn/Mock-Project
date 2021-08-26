@@ -121,7 +121,7 @@
                                 <h1 th:if=${account} th:text='${"Welcome, "+ account.firstName}'>Welcome, Name</h1>
                                 <h1 th:unless=${account}>Welcome, NULL</h1>
                             </div>
-                            <div class="content-quiz" th:if=${listQuizList}>
+                            <div class="content-quiz" th:if="${listQuizList}">
 
                                 <!--Category 1-->
                                 <div class="quiz-category" th:each="category : ${categoryList}">

@@ -61,6 +61,32 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         return null;
     }
 
+    @Override
+    public List<ListQuiz> getDoingQuizzes(String username) {
+        int account_id = accountRepository.findAccountByUsername(username).getId();
+        List<QuizHistory> quizHistories = quizHistoryRepository.getQuizHistoriesByAccount_Id(account_id);
+        List<ListQuiz> listQuizzes = new ArrayList<>();
+        for (QuizHistory quizHistory: quizHistories) {
+            if (quizHistory.getTimeAnswered() == null) {
+                listQuizzes.add(quizHistory.getListQuiz());
+            }
+        }
+        return (listQuizzes.size() == 0)?null:listQuizzes;
+    }
+
+    @Override
+    public List<ListQuiz> getFinishedQuizzes(String username) {
+        int account_id = accountRepository.findAccountByUsername(username).getId();
+        List<QuizHistory> quizHistories = quizHistoryRepository.getQuizHistoriesByAccount_Id(account_id);
+        List<ListQuiz> listQuizzes = new ArrayList<>();
+        for (QuizHistory quizHistory: quizHistories) {
+            if (quizHistory.getTimeAnswered() != null) {
+                listQuizzes.add(quizHistory.getListQuiz());
+            }
+        }
+        return (listQuizzes.size() == 0)?null:listQuizzes;
+    }
+
     public AnswerHistory getAnswerHistoryByQuizHistoryAndAnswerId(QuizHistory quizHistory, int answerId) {
         for (AnswerHistory answerHistory: quizHistory.getAnswerHistories()) {
             if (answerHistory.getAnswer().getId() == answerId) {

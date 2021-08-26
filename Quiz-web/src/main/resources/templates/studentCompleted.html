@@ -8,13 +8,13 @@
     <!--CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/studentHome.css">
+    <link rel="stylesheet" th:href="@{/css/instructorLibrary.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!--/CSS-->
-    <title>Quiz Home Page</title>
+    <title>Student Completed Activity</title>
 </head>
 
 <body>
@@ -28,6 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <script th:src="@{/js/jquery-3.6.6.min.js}"></script>
     <!---->
     <header>
         <div class="collapse" id="navbarToggleExternalContent">
@@ -63,7 +64,7 @@
             </div>
 
             <div class="main-header-right">
-                <a class="join-game-btn " href="/student/activity/running"><span><i class="fas fa-tasks"></i>
+                <a class="join-game-btn " href="/student-activity-running"><span><i class="fas fa-tasks"></i>
                         Activity</span></a>
             </div>
             <div class="main-header-right" style="width: 5%;"></div>
@@ -81,9 +82,9 @@
                     <td width="20%" valign="top">
                         <div class="side-bar">
                             <div class="side-bar-header">
-                                <a th:href="@{/login}" style="text-decoration: none;">
-                                    <h5 style="color:black"><i class="fas fa-user-alt"></i> Login</h5>
-                                </a>
+                                <h4 style="width: 50%;" class="nav-name" th:if="${account}"
+                                    th:text="${account.username}"></h4>
+                                <h4 style="width: 50%;" class="nav-name" th:unless="${account}">NULL</h4>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -92,17 +93,41 @@
                                 <ul>
                                     <a href="/student-home" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:purple"><i class="fas fa-home" aria-hidden="true"></i> Home
+                                            <h5 style="color:black"><i class="fas fa-home" aria-hidden="true"></i> Home
                                             </h5>
                                         </li>
                                     </a>
                                     <a href="/student/activity/completed" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:black"><i class="fas fa-tasks"></i>
+                                            <h5 style="color:purple"><i class="fas fa-tasks"></i>
                                                 Activity</h5>
                                         </li>
                                     </a>
                                     <hr>
+                                    <a href="/student/activity/completed" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:purple"><i class="fa fa-hourglass"></i>
+                                                Completed</h5>
+                                        </li>
+                                    </a>
+                                    <a href="/student/activity/running" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fa fa-hourglass"></i>
+                                                Running</h5>
+                                        </li>
+                                    </a>
+                                    <hr>
+                                    <a href="/student-profile" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fas fa-user-alt"></i> Profile</h5>
+                                        </li>
+                                    </a>
+                                    <a href="/logout" style="text-decoration: none;">
+                                        <li>
+                                            <h5 style="color:black"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                                                Logout</h5>
+                                        </li>
+                                    </a>
                                 </ul>
                             </div>
                         </div>
@@ -110,34 +135,21 @@
                     <td width="80%" valign="top">
                         <!--Content-->
                         <div class="instructor-content">
-                            <div class="welcome-name">
-                                <h1>Welcome</h1>
-                            </div>
-                            <div class="content-quiz" th:if=${listQuizList}>
-
-                                <!--Category 1-->
-                                <div class="quiz-category" th:each="category : ${categoryList}">
-                                    <h3 th:text=${category.name}></h3>
-                                    <div class="row">
-                                        <!---->
-                                        <div style="padding-bottom:30px;" class="col col-sm-3"
-                                            th:each="listQuiz: ${listQuizList}"
-                                            th:if="${listQuiz.category.name == category.name}">
-                                            <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
-                                                class="card"
-                                                style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
-                                                <img th:src="@{${listQuiz.imgLstquiz}}"
-                                                    style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                                                <!-- <hr> -->
-                                                <div class="card-body"
-                                                    style="background-color: #7a4ab8; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                                                    <h5 style="color: black; text-align:center" class="card-title"
-                                                        th:text=${listQuiz.name}></h5>
-                                                </div>
-                                            </a>
+                            <div class="content-quiz" th:if="${listQuizList}">
+                                <div style="padding-bottom:30px;" class="col col-sm-3"
+                                     th:each="listQuiz: ${listQuizList}">
+                                    <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
+                                       class="card"
+                                       style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
+                                        <img th:src="@{${listQuiz.imgLstquiz}}"
+                                             style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                        <!-- <hr> -->
+                                        <div class="card-body"
+                                             style="background-color: #7a4ab8; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                                            <h5 style="color: black; text-align:center" class="card-title"
+                                                th:text=${listQuiz.name}></h5>
                                         </div>
-                                        <hr style="border: 1 solid #a3a3a3;">
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
