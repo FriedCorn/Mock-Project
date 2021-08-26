@@ -50,6 +50,8 @@ public class ListQuizController {
         if (account != null) {
             listQuiz.setAccount(account);
             listQuizService.create(listQuiz);
+        } else {
+            return new ModelAndView("redirect:/login");
         }
 
         return new ModelAndView("redirect:/quiz");

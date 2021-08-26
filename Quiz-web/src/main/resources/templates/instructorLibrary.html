@@ -8,7 +8,7 @@
     <!--CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/instructorHome.css">
+    <link rel="stylesheet" href="css/instructorLibrary.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-        <script src="js/jquery-3.6.6.min.js"></script>
+    <script src="js/jquery-3.6.6.min.js"></script>
     <!---->
     <header>
         <div class="collapse" id="navbarToggleExternalContent">
@@ -39,7 +39,7 @@
         </div>
         <nav class="nav navbar-expand-lg main-header" style="position: fixed; top:0; width:100%; z-index:1">
             <div class="main-logo">
-                <a href="#">
+                <a href="/student-home">
                     <img class="nav-brand" src="https://cf.quizizz.com/img/quizizz_logos/white-brandmark-600x164.png"
                         alt="Quizizz">
                 </a>
@@ -60,7 +60,8 @@
             </div>
             <div class="main-header-right" style="width: 42%;"></div>
             <div class="main-header-right">
-                <a class="join-game-btn " href="/student-home"><span><i class="fa fa-modx" aria-hidden="true"></i> Student Mode</span></a>
+                <a class="join-game-btn " href="/student-home"><span><i class="fa fa-modx" aria-hidden="true"></i>
+                        Student Mode</span></a>
             </div>
         </nav>
     </header>
@@ -75,7 +76,8 @@
                                     th:text="${account.username}"></h4>
                                 <h4 style="width: 50%;" class="nav-name" th:unless="${account}">NULL</h4>
                                 <button style="width: 100%;" class="create-btn popup-button"
-                                    onclick="openForm('myForm')"><span><i class="fa fa-plus-circle" aria-hidden="true"></i> Create quiz</span></button>
+                                    onclick="openForm('myForm')"><span><i class="fa fa-plus-circle"
+                                            aria-hidden="true"></i> Create quiz</span></button>
                             </div>
                             <div class="separate">
                                 <hr>
@@ -84,12 +86,13 @@
                                 <ul>
                                     <a href="/instructor-home" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:purple"><i class="fas fa-map-marked-alt"></i> Explore</h5>
+                                            <h5 style="color:black"><i class="fas fa-map-marked-alt"></i> Explore</h5>
                                         </li>
                                     </a>
                                     <a href="/instructor-library" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:black"><i class="fa fa-folder-open" aria-hidden="true"></i>
+                                            <h5 style="color:purple"><i class="fa fa-folder-open"
+                                                    aria-hidden="true"></i>
                                                 My library</h5>
                                         </li>
                                     </a>
@@ -117,37 +120,61 @@
                     <td width="80%" valign="top">
                         <!--Content-->
                         <div class="instructor-content">
-                            <div class="welcome-name">
-                                <h1 th:if=${account} th:text='${"Welcome, "+ account.firstName}'>Welcome, Name</h1>
-                                <h1 th:unless=${account}>Welcome, NULL</h1>
-                            </div>
-                            <div class="content-quiz" th:if=${listQuizList}>
-
-                                <!--Category 1-->
-                                <div class="quiz-category" th:each="category : ${categoryList}">
-                                    <h3 th:text=${category.name}></h3>
-                                    <div class="row">
-                                        <!---->
-                                        <div style="padding-bottom:30px;" class="col col-sm-3"
-                                            th:each="listQuiz: ${listQuizList}"
-                                            th:if="${listQuiz.category.name == category.name}">
-                                            <a type="button" th:onclick="'openForm(\'' + ${listQuiz.id} + '\');'"
-                                                class="card"
-                                                style="text-decoration:none; color:black;width: 90%; border:1px solid #d3d3d3; border-radius: 10px;">
-                                                <img src="/image/quiz.jpg"
-                                                    style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                                                <!-- <hr> -->
-                                                <div class="card-body"
-                                                    style="background-color: #7a4ab8; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                                                    <h5 style="color: black; text-align:center" class="card-title"
-                                                        th:text=${listQuiz.name}></h5>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <hr style="border: 1 solid #a3a3a3;">
-                                    </div>
+                            <!--Navigator-->
+                            <div class="row">
+                                <div class="col col-4">
+                                    My library <span th:if="${listQuizList}"
+                                        th:text="${'(' + listQuizList.size() + ')'}"></span>
+                                    <span th:unless="${listQuizList}">(0)</span>
+                                </div>
+                                <div class="col">
+                                    <form action="">
+                                        <label class="text">Order:</label>
+                                        <select class="form-select order-select">
+                                            <option value="alpha">Aphabetical</option>
+                                            <option value="recent">Most recent</option>
+                                        </select>
+                                    </form>
                                 </div>
                             </div>
+                            <!--/Navigator-->
+
+                            <div class="quiz-info">
+                                <!--Quiz 1-->
+                                <div class="quiz-element" th:each="listQuiz : ${listQuizList}">
+                                    <!---->
+                                    <a class="list-quiz-item" href="quiz-"
+                                        style="text-decoration:none; color:black; border:1px solid #d3d3d3; border-radius: 10px;">
+                                        <div class="row">
+                                            <div class="col col-sm-4">
+                                                <img class="quiz-img"
+                                                    src="https://quizizz.com/_media/questions/3738117f-db72-4963-9193-16bbe0b55f8a_200_200"
+                                                    alt="Card image cap">
+                                                <div>
+                                                    <h5 th:text=${listQuiz.name}></h5>
+                                                    <p th:text=${listQuiz.category.name}></p>
+                                                </div>
+                                            </div>
+                                            <div class="col col-sm-3">
+                                                <p th:text="${listQuiz.numberOfQuiz + ' Questions'}"></p>
+                                                <p th:text=${listQuiz.timeLimit}></p>
+                                            </div>
+                                            <div class="col">
+                                                <div>
+                                                    <p>
+                                                        <span class="code-background">
+                                                            CODE:
+                                                            <span class="code-content" th:text=${listQuiz.id}></span>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!---->
+                                </div>
+                            </div>
+
                         </div>
                     </td>
                 </tr>
@@ -329,23 +356,6 @@
             <button type="button" class="btn cancel" onclick="closeForm('myForm')"><b>Close</b></button>
         </form>
     </div>
-
-    <th:block th:if=${listQuizList}>
-        <th:block th:each="listQuiz: ${listQuizList}">
-            <div class="form-popup" th:id="${listQuiz.id}">
-                <form class="form-container" th:object="${listQuizForm}" th:action="${'/playQuiz/' + listQuiz.id}">
-                    <img style="width: 100%;" src="/image/quiz.jpg">
-                    <h1 style="width:300px" th:text=${listQuiz.name}></h1>
-                    <hr>
-                    <h6 th:text="${listQuiz.numberOfQuiz + ' questions'}"></h6>
-                    <h6 th:text="${'Time: ' + listQuiz.timeLimit}"></h6>
-                    <button type="submit" class="btn"><b>Play</b></button>
-                    <button type="button" class="btn cancel"
-                        th:onclick="'closeForm(\'' + ${listQuiz.id} + '\');'"><b>Close</b></button>
-                </form>
-            </div>
-        </th:block>
-    </th:block>
 
     <script>
         function openForm(id) {
