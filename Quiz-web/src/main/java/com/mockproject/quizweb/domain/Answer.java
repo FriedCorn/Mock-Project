@@ -34,7 +34,6 @@ public class Answer {
     @JoinColumn(name = "quiz_id", referencedColumnName = "id", nullable = false)
     private Quiz quizByQuizId;
 
-    @JsonIgnore
     @Basic
     @Column(name = "is_true_answer")
     private boolean isTrueAnswer;
