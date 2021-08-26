@@ -39,13 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Non-login required
         http.authorizeRequests().antMatchers("/", "/login", "/logout",
-                "/webjars/**", "/css/**", "/js/**", "/img/**").permitAll();
+                "/webjars/**", "/css/**", "/js/**", "/image/**", "/search/**").permitAll();
 
         // AccessDeniedException
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Authorized all
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().hasRole("USER");
 
         // Login Form.
         http.authorizeRequests().and().formLogin()
