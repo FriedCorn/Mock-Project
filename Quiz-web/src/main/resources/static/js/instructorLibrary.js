@@ -113,5 +113,12 @@ function delete_active (e) {
 }
 
 function update_active (e) {
-    console.log(e.target.parentElement.id);
+    // console.log(e.target.parentElement.id);
+    openForm("addQuestionPopup");
+}
+
+function openForm(id) {
+    document.getElementById("container-fluid").style.filter = 'blur(3px)';
+    document.getElementById("container-fluid").style.pointerEvents = 'none';
+    document.getElementById(id).style.display = "block";
 }
