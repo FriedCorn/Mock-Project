@@ -16,7 +16,7 @@
         var list_quiz_id = /*[[${listQuiz.id}]]*/ 1;
     </script>
     <!--/CSS-->
-    <title>View Quiz Detail</title>
+    <title>View Report Detail</title>
 </head>
 
 <body>
@@ -91,14 +91,14 @@
                                     </a>
                                     <a href="/instructor-library" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:purple"><i class="fa fa-folder-open"
+                                            <h5 style="color:black"><i class="fa fa-folder-open"
                                                     aria-hidden="true"></i>
                                                 My library</h5>
                                         </li>
                                     </a>
                                     <a href="/instructor-report" style="text-decoration: none;">
                                         <li>
-                                            <h5 style="color:black"><i class="fa fa-bar-chart"></i> Report</h5>
+                                            <h5 style="color:purple"><i class="fa fa-bar-chart"></i> Report</h5>
                                         </li>
                                     </a>
                                     <hr>
@@ -125,7 +125,7 @@
                             <div class="row quiz-detailed align-middle">
                                 <div class="col col-sm-4">
                                     <img class="quiz-img"
-                                         th:src="@{${'/imgsrc'+listQuiz.imgLstquiz}}"
+                                         th:src="@{${listQuiz.imgLstquiz}}"
                                          alt="Card image cap">
                                     <div>
                                         <h5 th:text=${listQuiz.name}></h5>
@@ -144,9 +144,9 @@
                             </div>
                             <!--/Quiz-->
 
-                            <!--List Quiz-->
-                            <div id="quiz-body"></div>
-                            <!--/List Quiz-->
+                            <!--List User-->
+                            <div id="report_body" class="container align-middle text-center"></div>
+                            <!--/List User-->
 
                         </div>
                     </td>
@@ -169,7 +169,7 @@
             document.getElementById(id).style.display = "none";
         }
     </script>
-    <script type="text/javascript" th:src="@{/js/instructorLibrary.js}"></script>
+    <script type="text/javascript" th:src="@{/js/instructorReview.js}"></script>
 
 </body>
 
