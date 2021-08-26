@@ -27,8 +27,9 @@ public class LoginController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = {"/", "/login"})
+    @GetMapping(value = {"/login"})
     public String login(Model model, String error) {
+//        System.out.println(accountService.getCurrentAccount().getUsername());
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
         return "login";

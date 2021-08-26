@@ -29,7 +29,7 @@ public class StudentModeController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = { "/student/listquiz", "student-home" })
+    @GetMapping(value = { "/student/listquiz", "/student-home" })
     public ModelAndView getListQuizForStudent(ModelAndView mv) {
         Account account = accountService.getCurrentAccount();
         mv.addObject("account", account);
