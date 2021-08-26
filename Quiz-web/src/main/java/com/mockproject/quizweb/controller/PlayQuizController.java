@@ -33,12 +33,19 @@ public class PlayQuizController {
     @GetMapping(value = {"/{list_quiz_id}"})
     public String getListQuiz(Model model,
                               @PathVariable Integer list_quiz_id,
+                              @RequestParam(required = false, value = "new") Boolean newQuiz,
                               Principal principal) {
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         String remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(listQuiz, principal.getName());
         if (remainTime.compareTo("This quiz has ended!") == 0) {
-            model.addAttribute("error", remainTime);
+            if (newQuiz != null && newQuiz) {
+                quizHistory = quizHistoryService.newQuizHistory(listQuiz, principal.getName());
+                remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
+            }
+            else {
+                model.addAttribute("error", remainTime);
+            }
         }
         Quiz quiz = listQuiz.getQuizzes().get(0);
         model.addAttribute("time", remainTime);
@@ -47,8 +54,10 @@ public class PlayQuizController {
         model.addAttribute("total", listQuiz.getNumberOfQuiz());
         model.addAttribute("quiz", quiz);
         if (quizHistory != null) {
-            boolean[] oldAns = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
-            model.addAttribute("oldAns", oldAns);
+            if (quizHistory.getAnswerHistories() != null) {
+                boolean[] oldAns = answerHistoryService.getAnswerHistoryByQuiz(quizHistory, quiz);
+                model.addAttribute("oldAns", oldAns);
+            }
         }
         return "playQuiz";
     }

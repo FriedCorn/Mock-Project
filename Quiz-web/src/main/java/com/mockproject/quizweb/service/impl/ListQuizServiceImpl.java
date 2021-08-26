@@ -58,15 +58,8 @@ public class ListQuizServiceImpl implements ListQuizService {
                 Duration dur = Duration.between(now, end);
                 ret = dur.toHours() + ":" + dur.toMinutes() % 60
                         + ":" + dur.toSeconds() % 60;
+                return ret;
             }
-        }
-        else {
-            QuizHistory quizHistory = new QuizHistory();
-            quizHistory.setTimeStarted(dtf.format(LocalDateTime.now()));
-            quizHistory.setAccount(accountRepository.findAccountByUsername(username));
-            quizHistory.setListQuiz(listQuiz);
-            quizHistoryRepository.save(quizHistory);
-            ret = listQuiz.getTimeLimit();
         }
         return ret;
     }

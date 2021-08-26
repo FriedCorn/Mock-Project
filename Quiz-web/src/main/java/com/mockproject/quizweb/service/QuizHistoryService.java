@@ -14,4 +14,5 @@ public interface QuizHistoryService {
     QuizHistory getDoingQuiz(int list_quiz_id, String username);
     QuizHistory getDoingQuiz(ListQuiz listQuiz, String username);
     AnswerHistory getAnswerHistoryByQuizHistoryAndAnswerId(QuizHistory quizHistory, int answerId);
+    QuizHistory newQuizHistory(ListQuiz listQuiz, String username);
 }
