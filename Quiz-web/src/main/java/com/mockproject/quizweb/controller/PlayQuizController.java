@@ -33,19 +33,15 @@ public class PlayQuizController {
     @GetMapping(value = {"/{list_quiz_id}"})
     public String getListQuiz(Model model,
                               @PathVariable Integer list_quiz_id,
-                              @RequestParam(required = false, value = "new") Boolean newQuiz,
                               Principal principal) {
+        System.out.println(principal.getName());
+
         ListQuiz listQuiz = listQuizService.getListQuizById(list_quiz_id);
         String remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
         QuizHistory quizHistory = quizHistoryService.getDoingQuiz(listQuiz, principal.getName());
         if (remainTime.compareTo("This quiz has ended!") == 0) {
-            if (newQuiz != null && newQuiz) {
-                quizHistory = quizHistoryService.newQuizHistory(listQuiz, principal.getName());
-                remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
-            }
-            else {
-                model.addAttribute("error", remainTime);
-            }
+            quizHistory = quizHistoryService.newQuizHistory(listQuiz, principal.getName());
+            remainTime = listQuizService.getRemainTime(listQuiz, principal.getName());
         }
         Quiz quiz = listQuiz.getQuizzes().get(0);
         model.addAttribute("time", remainTime);
