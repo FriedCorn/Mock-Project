@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // Non-login required
-        http.authorizeRequests().antMatchers("/", "/login", "/logout",
+        http.authorizeRequests().antMatchers("/", "/login", "/signup", "/logout",
                 "/webjars/**", "/css/**", "/js/**", "/image/**", "/search/**").permitAll();
 
         // AccessDeniedException
