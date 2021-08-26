@@ -10,5 +10,6 @@ public interface ListQuizService {
     void create(ListQuiz listQuiz);
     List<ListQuiz> getAllListQuiz();
     List<ListQuiz> getListQuizByAccountUsername(String username);
+    List<ListQuiz> getListQuizsById(int id);
 
 }
