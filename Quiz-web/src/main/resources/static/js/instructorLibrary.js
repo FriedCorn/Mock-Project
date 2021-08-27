@@ -36,12 +36,12 @@ function addQuestion(quiz, number) {
     btn__remove.classList.add("btn__remove", "quiz_button");
     btn__remove.innerHTML = "Remove";
     btn__remove.onclick = function(event) {delete_active(event);};
-    let btn__update = document.createElement("button");
-    btn__update.classList.add("btn__update", "quiz_button");
-    btn__update.innerHTML = "Update";
-    btn__update.onclick = function(event) {update_active(event);};
+    // let btn__update = document.createElement("button");
+    // btn__update.classList.add("btn__update", "quiz_button");
+    // btn__update.innerHTML = "Update";
+    // btn__update.onclick = function(event) {update_active(event);};
     btn__controller.appendChild(btn__remove);
-    btn__controller.appendChild(btn__update);
+    // btn__controller.appendChild(btn__update);
     question__head.appendChild(question_name);
     question__head.appendChild(btn__controller);
 
