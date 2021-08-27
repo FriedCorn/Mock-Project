@@ -34,7 +34,7 @@ public class SearchController {
 
     @GetMapping(value = { ""})
     public ModelAndView getListQuizForStudent(ModelAndView mv,
-                                              @RequestParam Integer list_id) {
+                                              @RequestParam(required = false) Integer list_id) {
         Account account = accountService.getCurrentAccount();
         mv.addObject("account", account);
 
@@ -43,7 +43,7 @@ public class SearchController {
         mv.addObject("categoryList", categoryList);
         mv.setViewName("studentHome");
 
-        List<ListQuiz> listQuizList = listQuizService.getListQuizsById(list_id);
+        List<ListQuiz> listQuizList = (list_id != null)?listQuizService.getListQuizsById(list_id):null;
         mv.addObject("listQuizList", listQuizList);
 
         return mv;
