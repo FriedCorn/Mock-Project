@@ -133,7 +133,7 @@
                                 <div class="col col-sm-4">
                                     <img class="quiz-img"
                                          th:src="@{${listQuiz.imgLstquiz}}"
-                                         alt="Card image cap">
+                                         onerror=this.src='/image/quiz.jpg'>
                                     <div>
                                         <h5 th:text=${listQuiz.name}></h5>
                                         <p th:text=${listQuiz.category.name}></p>
